@@ -74,26 +74,26 @@ public class LocationDAOImpl implements LocationDAO{
         try{
             //If a locationID is given
             if(locateID != null && locateState == null && locateCity == null){
-                String retrieveLocation = "SELECT * FROM Locations WHERE Locations.locationID = ?;";
+                String retrieveLocation = "SELECT * FROM locations WHERE locations.locationID = ?;";
                 ps = connection.prepareStatement(retrieveLocation);
                 ps.setString(1, locationID.toString());
             }
             //If a state is given
             else if(locateID == null && locateState != null && locateCity == null){
-                String retrieveLocation = "SELECT * FROM Locations WHERE Locations.locationState = ?;";
+                String retrieveLocation = "SELECT * FROM locations WHERE locations.locationState = ?;";
                 ps = connection.prepareStatement(retrieveLocation);
                 ps.setString(1, locationState.toString());
             }
             //If a city is given
             else if(locateID == null && locateState == null && locateCity != null){
-                String retrieveLocation = "SELECT * FROM Locations WHERE Locations.city = ?;";
+                String retrieveLocation = "SELECT * FROM locations WHERE locations.city = ?;";
                 ps = connection.prepareStatement(retrieveLocation);
                 ps.setString(1, city.toString());
             }
             //Returns all.  If no locationID or state or city is given
             //Not sure about this one.  The security of preparedstatements is a nonfactor.
             else if(locateID == null && locateState == null && locateCity == null){
-                String retrieveLocation = "SELECT * FROM Locations;";
+                String retrieveLocation = "SELECT * FROM locations;";
                 ps = connection.prepareStatement(retrieveLocation);
             }
 
@@ -106,17 +106,17 @@ public class LocationDAOImpl implements LocationDAO{
             ArrayList<Location> locationList = new ArrayList<>();
             while(rs.next()){
                 Location location = new Location();
-                location.setLocationID(Long.valueOf(rs.getString("locationID")));
+                location.setLocationID(rs.getLong("locationID"));
                 location.setLocationState(rs.getString("locationState"));
                 location.setCounty(rs.getString("county"));
                 location.setCity(rs.getString("city"));
                 location.setStreet(rs.getString("street"));
                 location.setZipcode(rs.getString("zipcode"));
-                location.setCityTaxes(Long.valueOf(rs.getString("cityTaxes")));
-                location.setStateTaxes(Long.valueOf(rs.getString("statesTaxes")));
-                location.setRent(Long.valueOf(rs.getString("rent")));
-                location.setElectricity(Long.valueOf(rs.getString("electricity")));
-                location.setWater(Long.valueOf(rs.getString("water")));
+                location.setCityTaxes(rs.getLong("cityTaxes"));
+                location.setStateTaxes(rs.getLong("stateTaxes"));
+                location.setRent(rs.getLong("rent"));
+                location.setElectricity(rs.getLong("electricity"));
+                location.setWater(rs.getLong("water"));
                 locationList.add(location);
             }
 
@@ -155,17 +155,17 @@ public class LocationDAOImpl implements LocationDAO{
                 return null;
             }
             Location location = new Location();
-            location.setLocationID(Long.valueOf(rs.getString("locationID")));
+            location.setLocationID(rs.getLong("locationID"));
             location.setLocationState(rs.getString("locationState"));
             location.setCounty(rs.getString("county"));
             location.setCity(rs.getString("city"));
             location.setStreet(rs.getString("street"));
             location.setZipcode(rs.getString("zipcode"));
-            location.setCityTaxes(Long.valueOf(rs.getString("cityTaxes")));
-            location.setStateTaxes(Long.valueOf(rs.getString("statesTaxes")));
-            location.setRent(Long.valueOf(rs.getString("rent")));
-            location.setElectricity(Long.valueOf(rs.getString("electricity")));
-            location.setWater(Long.valueOf(rs.getString("water")));
+            location.setCityTaxes(rs.getLong("cityTaxes"));
+            location.setStateTaxes(rs.getLong("stateTaxes"));
+            location.setRent(rs.getLong("rent"));
+            location.setElectricity(rs.getLong("electricity"));
+            location.setWater(rs.getLong("water"));
             return location;
         }
         catch(Exception ex){
@@ -184,7 +184,6 @@ public class LocationDAOImpl implements LocationDAO{
     //May need to create another method if all locations need returned
     //Or can change this to ArrayList<Location>
     public Location retrieveLocation(Connection connection, Long locationID) throws SQLException {
-        System.err.println("Made it here:" + locationID + ".");
         PreparedStatement ps = null;
         try{
             String retrieveLocation = "SELECT * FROM locations WHERE locations.locationID = ?;";
@@ -198,9 +197,7 @@ public class LocationDAOImpl implements LocationDAO{
                 System.out.println("beeboopbeboop");
                 return null;
             }
-            System.err.println("is it making it here?");
             Location location = new Location();
-            //location.setLocationID(Long.valueOf(rs.getString("locationID")));
             location.setLocationID(rs.getLong("locationID"));
             location.setLocationState(rs.getString("locationState"));
             location.setCounty(rs.getString("county"));
@@ -208,7 +205,7 @@ public class LocationDAOImpl implements LocationDAO{
             location.setStreet(rs.getString("street"));
             location.setZipcode(rs.getString("zipcode"));
             location.setCityTaxes(rs.getLong("cityTaxes"));
-            location.setStateTaxes(rs.getLong("statesTaxes"));
+            location.setStateTaxes(rs.getLong("stateTaxes"));
             location.setRent(rs.getLong("rent"));
             location.setElectricity(rs.getLong("electricity"));
             location.setWater(rs.getLong("water"));
@@ -244,17 +241,17 @@ public class LocationDAOImpl implements LocationDAO{
             ArrayList<Location> locationList = new ArrayList<>();
             while(rs.next()){
                 Location location = new Location();
-                location.setLocationID(Long.valueOf(rs.getString("locationID")));
+                location.setLocationID(rs.getLong("locationID"));
                 location.setLocationState(rs.getString("locationState"));
                 location.setCounty(rs.getString("county"));
                 location.setCity(rs.getString("city"));
                 location.setStreet(rs.getString("street"));
                 location.setZipcode(rs.getString("zipcode"));
-                location.setCityTaxes(Long.valueOf(rs.getString("cityTaxes")));
-                location.setStateTaxes(Long.valueOf(rs.getString("stateTaxes")));
-                location.setRent(Long.valueOf(rs.getString("rent")));
-                location.setElectricity(Long.valueOf(rs.getString("electricity")));
-                location.setWater(Long.valueOf(rs.getString("water")));
+                location.setCityTaxes(rs.getLong("cityTaxes"));
+                location.setStateTaxes(rs.getLong("stateTaxes"));
+                location.setRent(rs.getLong("rent"));
+                location.setElectricity(rs.getLong("electricity"));
+                location.setWater(rs.getLong("water"));
                 locationList.add(location);
             }
 

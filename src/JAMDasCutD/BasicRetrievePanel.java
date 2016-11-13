@@ -7,11 +7,15 @@ package JAMDasCutD;
 
 import DAO.LocationDAO;
 import DAO.EmployeeDAO;
+import DAOImpl.DonorDAOImpl;
 import DAOImpl.LocationDAOImpl;
 import DAOImpl.EmployeeDAOImpl;
+import DAOImpl.SuppliesDAOImpl;
 import DBConnection.DBConnection;
+import Entity.Donor;
 import Entity.Location;
 import Entity.Employee;
+import Entity.Supplies;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -67,6 +71,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jRadioButton3 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
@@ -82,13 +87,22 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jComboBox6 = new javax.swing.JComboBox();
 
+        setMinimumSize(new java.awt.Dimension(825, 650));
+        setPreferredSize(new java.awt.Dimension(825, 650));
+
         jRadioButton1.setText("Retrieve Location");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setText("Location");
 
         jButton1.setText("Retrieve");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -116,7 +130,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(74, 74, 74)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,12 +175,18 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         );
 
         jRadioButton2.setText("Retrieve Employee");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setText("Location");
 
         jButton2.setText("Retrieve");
+        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -182,6 +202,8 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jLabel8.setText("Social Security");
 
         jLabel11.setText("Employee ID");
+
+        jLabel14.setText("or");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -200,52 +222,70 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel14)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel6)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel8))
-                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel14)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jRadioButton3.setText("Retrieve Donor");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jButton3.setText("Retrieve");
+        jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Location");
 
@@ -302,12 +342,23 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         );
 
         jRadioButton4.setText("Retrieve Supplies");
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
 
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel4.setText("Location");
 
         jButton4.setText("Retrieve");
+        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Any", "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
 
@@ -382,20 +433,18 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 .addComponent(jRadioButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         LocationDAOImpl locationDAO = new LocationDAOImpl();
-        Location location = new Location();
+        Location location;// = new Location();
         String locationString = jComboBox1.getSelectedItem().toString();
-        Long locationID;
-        if(locationString.equals(defaultState)){
-            String city = jComboBox1.getSelectedItem().toString();
-            String locationState = jComboBox1.getSelectedItem().toString();
-//            location.setCity(jComboBox1.getSelectedItem().toString());
-//            location.setLocationState(jComboBox1.getSelectedItem().toString());
+        
+        if(locationString.equals("<Choose a location>")){
+            String city = jComboBox2.getSelectedItem().toString();
+            String locationState = jComboBox3.getSelectedItem().toString();
             try {
                 location = locationDAO.retrieveLocation(getConnection(), city, locationState);
                 //*******Problem*******
@@ -405,80 +454,32 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else if(locationString.equals("Dallas, Texas")){
-            System.out.println("IS THIS WOKRING :" + locationString + ".");
-            locationID = (long) 1;
+        else{
             try {
-                location = locationDAO.retrieveLocation(getConnection(), locationID);
-               //*******Problem*******
-                //System.out.println("STATE INSIDE IS " + location.getLocationState());
-                printLocation(location);
+                long selectedLocation = provideLocationID(locationString);
                 
-            }
-            catch (SQLException | IOException ex) {
-                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        else if(locationString.equals("Palo Alto, California")){
-            locationID = (long) 2;
-            try {
-                location = locationDAO.retrieveLocation(getConnection(), locationID);
+                location = locationDAO.retrieveLocation(getConnection(), selectedLocation);
                 //*******Problem*******
                 printLocation(location);
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if(locationString.equals("Denver, Colorado")){
-            locationID = (long) 3;
-            try {
-                location = locationDAO.retrieveLocation(getConnection(), locationID);
-                //*******Problem*******
-                printLocation(location);
-            }
-            catch (SQLException | IOException ex) {
-                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        else if(locationString.equals("New York, New York")){
-            locationID = (long) 4;
-            try {
-                location = locationDAO.retrieveLocation(getConnection(), locationID);
-               //*******Problem*******
-                printLocation(location);
-            }
-            catch (SQLException | IOException ex) {
-                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        else if(locationString.equals("Charlotte, North Carolina")){
-            locationID = (long) 5;
-            try {
-                location = locationDAO.retrieveLocation(getConnection(), locationID);
-                //*******Problem*******
-                printLocation(location);
-            }
-            catch (SQLException | IOException ex) {
-                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        else {
-            System.err.println("How'd you get here???");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //Retrieve Employee(s)
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
-        ArrayList<Employee> employeeList = new ArrayList<>();
+        ArrayList<Employee> employeeList;// = new ArrayList<>();
         String locationString = jComboBox4.getSelectedItem().toString();
-        Long locationID;
-        if(locationString.equals("Any")){
-            String firstName = jTextField1.getText();
-            String lastName = jTextField2.getText();
-            String ssn = jTextField3.getText();
-//            location.setCity(jComboBox1.getSelectedItem().toString());
-//            location.setLocationState(jComboBox1.getSelectedItem().toString());
+        String employeeID = jTextField4.getText();
+        String firstName = jTextField1.getText();
+        String lastName = jTextField2.getText();
+        String ssn = jTextField3.getText();
+            
+        //Any State and no employee ID
+        if(locationString.equals("Any") && employeeID.equals("")){
             try {
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), firstName, lastName, ssn);
                 //*******Problem*******
@@ -488,68 +489,126 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-//        else if(locationString.equals("Dallas, Texas")){
-//            System.out.println("IS THIS WOKRING :" + locationString + ".");
-//            locationID = (long) 1;
-//            try {
-//                location = locationDAO.retrieveLocation(getConnection(), locationID);
-//               //*******Problem*******
-//                //System.out.println("STATE INSIDE IS " + location.getLocationState());
-//                printLocation(location);
-//                
-//            }
-//            catch (SQLException | IOException ex) {
-//                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        else if(locationString.equals("Palo Alto, California")){
-//            locationID = (long) 2;
-//            try {
-//                location = locationDAO.retrieveLocation(getConnection(), locationID);
-//                //*******Problem*******
-//                printLocation(location);
-//            }
-//            catch (SQLException | IOException ex) {
-//                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        else if(locationString.equals("Denver, Colorado")){
-//            locationID = (long) 3;
-//            try {
-//                location = locationDAO.retrieveLocation(getConnection(), locationID);
-//                //*******Problem*******
-//                printLocation(location);
-//            }
-//            catch (SQLException | IOException ex) {
-//                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        else if(locationString.equals("New York, New York")){
-//            locationID = (long) 4;
-//            try {
-//                location = locationDAO.retrieveLocation(getConnection(), locationID);
-//               //*******Problem*******
-//                printLocation(location);
-//            }
-//            catch (SQLException | IOException ex) {
-//                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        else if(locationString.equals("Charlotte, North Carolina")){
-//            locationID = (long) 5;
-//            try {
-//                location = locationDAO.retrieveLocation(getConnection(), locationID);
-//                //*******Problem*******
-//                printLocation(location);
-//            }
-//            catch (SQLException | IOException ex) {
-//                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        else {
-//            System.err.println("I want to cry??");
-//        }
+        
+        //Any State and employee ID is given
+        else if (locationString.equals("Any") && !employeeID.equals("")){
+            try {
+                long employeeLocation = provideLocationID(locationString);
+                Long employeeIDLong = Long.valueOf(employeeID);
+                employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation, employeeIDLong);
+                //*******Problem*******
+                printEmployees(employeeList);
+            }
+            catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        //A State is given and no employee ID is given
+        else if (!locationString.equals("Any") && employeeID.equals("")){
+            try {
+                long employeeLocation = provideLocationID(locationString);
+                employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation);
+                //*******Problem*******
+                printEmployees(employeeList);
+            }
+            catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        //A state is given and an employee iD is given
+        else if (!locationString.equals("Any") && !employeeID.equals("")){
+            try {
+                long employeeLocation = provideLocationID(locationString);
+                Long employeeIDLong = Long.valueOf(employeeID);
+                employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation, employeeIDLong);
+                //*******Problem*******
+                printEmployees(employeeList);
+            }
+            catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DonorDAOImpl donorDAO = new DonorDAOImpl();
+        ArrayList<Donor> donorList;// = new ArrayList<>();
+        String locationString = jComboBox5.getSelectedItem().toString();
+        String firstName = jTextField5.getText();
+        String lastName = jTextField6.getText();
+        
+            
+        if(locationString.equals("Any")){
+            try {
+                donorList = donorDAO.retrieveDonor(getConnection(), firstName, lastName);
+                //*******Problem*******
+                printDonors(donorList);
+            }
+            catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (!locationString.equals("Any")){
+            try {
+                long donorsLocation = provideLocationID(locationString);
+                System.out.println("LocationID: " + donorsLocation);
+                donorList = donorDAO.retrieveDonor(getConnection(), donorsLocation, firstName, lastName);
+                //*******Problem*******
+                printDonors(donorList);
+            }
+            catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        SuppliesDAOImpl supplyDAO = new SuppliesDAOImpl();
+        ArrayList<Supplies> supplyList;// = new ArrayList<>();
+        String locationString = jComboBox6.getSelectedItem().toString();
+        long suppliesLocation = provideLocationID(locationString);
+        
+        if(!locationString.equals("Any")){
+            try{
+                supplyList = supplyDAO.retrieveSupplies(getConnection(), suppliesLocation);
+                //*******Problem*******
+                printSupplies(supplyList);
+            }
+            catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        jButton1.setEnabled(true);
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(false);
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(true);
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(false);
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(true);
+        jButton4.setEnabled(false);
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(true);
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
     
     private void groupButton( ) {
         ButtonGroup bg1 = new ButtonGroup( );
@@ -560,32 +619,104 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
     }
     
     private void printLocation(Location location){
-        System.out.println("Here's your location");
-        Long llocationID = location.getLocationID();
-        System.out.println("Her's an attempt " + (long)1);
-        System.out.println("LocationID " + llocationID);
-        //System.out.println("LocationState " + location.getLocationState());
-        System.out.println("County " + location.getCounty());
-        System.out.println("City " + location.getCity());
-        System.out.println("Street " + location.getStreet());
-        System.out.println("Zipcode " + location.getZipcode());
-        System.out.println("cityTaxes " + location.getCityTaxes());
-        System.out.println("stateTaxes " + location.getStateTaxes());
-        System.out.println("rent " + location.getRent());
-        System.out.println("electricity " + location.getElectricity());
-        System.out.println("water " + location.getWater());
+        if(location != null){
+            System.out.println("LocationID: " + location.getLocationID());
+            System.out.println("LocationState: " + location.getLocationState());
+            System.out.println("County: " + location.getCounty());
+            System.out.println("City: " + location.getCity());
+            System.out.println("Street: " + location.getStreet());
+            System.out.println("Zipcode: " + location.getZipcode());
+            System.out.println("City Taxes: " + location.getCityTaxes());
+            System.out.println("State Taxes: " + location.getStateTaxes());
+            System.out.println("Rent: " + location.getRent());
+            System.out.println("Electricity: " + location.getElectricity());
+            System.out.println("Water: " + location.getWater());
+        }
+        else{
+            System.out.println("There were no matches found");
+        }
+    }
+    
+    private Long provideLocationID(String locationIDNeeded){
+        LocationDAOImpl locationDAO = new LocationDAOImpl();
+        Location location;// = new Location();
+        long locationIDprovided = 0;
+
+        String cityToken;
+        String locationStateToken;
+        String fullLocation = locationIDNeeded;
+        String delims = "[,]+";
+        String[] tokens = fullLocation.split(delims);
+        cityToken = tokens[0];
+        locationStateToken = tokens[1].trim();
+        
+        try {
+            location = locationDAO.retrieveLocation(getConnection(), cityToken, locationStateToken);
+            locationIDprovided = location.getLocationID();
+        }
+        catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return locationIDprovided;
+        
     }
     
     private void printEmployees(ArrayList<Employee> employees){
-        for(int i = 0; i<employees.size()+1; i++){
-            Employee employee = employees.get(i);
-            System.out.println("Employee ID " + employee.getEmployeeID());
-            System.out.println("Location ID: " + employee.getLocationID());
-            System.out.println("First Name: " + employee.getEmployeeFirst());
-            System.out.println("Last Name: " + employee.getEmployeeLast());
-            System.out.println("SSN:  " + employee.getEmployeeSSN());
-            System.out.println("Type: " + employee.getEmployeeType());
-            System.out.println("Date Of Hire: " + employee.getDateOfHire());
+        if(employees != null){
+            int numberOfEmployees = employees.size();    
+            for(int i = 0; i<numberOfEmployees; i++){
+                Employee employee = employees.get(i);
+                System.out.println("Employee ID: " + employee.getEmployeeID());
+                System.out.println("Location ID: " + employee.getLocationID());
+                System.out.println("First Name: " + employee.getEmployeeFirst());
+                System.out.println("Last Name: " + employee.getEmployeeLast());
+                System.out.println("SSN: " + employee.getEmployeeSSN());
+                System.out.println("Type: " + employee.getEmployeeType());
+                System.out.println("Date Of Hire: " + employee.getDateOfHire());
+            }
+        }
+        else{
+            System.out.println("There were no matches found");
+        }
+    }
+    
+    private void printSupplies(ArrayList<Supplies> supplies){
+        if(supplies != null){
+            int supplySize = supplies.size();
+            for(int i = 0; i<supplySize; i++){
+                System.out.println("Supply number " + (i+1) + " out of " + supplySize);
+                Supplies supply = supplies.get(i);
+                System.out.println("Location ID " + supply.getLocationID());
+                System.out.println("Supply Name: " + supply.getSupplyName());
+                System.out.println("Supply Type: " + supply.getSupplyType());
+                System.out.println("Supply Quantity: " + supply.getSupplyQuantity());
+                System.out.println("Supply Description: " + supply.getSupplyDescription());
+            }
+        }
+        else{
+            System.out.println("There were no matches found");
+        }
+        
+    }
+    
+    private void printDonors(ArrayList<Donor> donorList){
+        if(donorList != null){
+            int numberOfDonors = donorList.size();
+            for(int i = 0; i<numberOfDonors; i++){
+                System.out.println("Donor number " + (i+1) + " out of " + numberOfDonors);
+                Donor donor = donorList.get(i);
+                System.out.println("Donor ID: " + donor.getDonorID());
+                System.out.println("Location ID " + donor.getLocationID());
+                System.out.println("Donor First Name: " + donor.getDonorFirst());
+                System.out.println("Donor Last Name: " + donor.getDonorLast());
+                System.out.println("Donation date: " + donor.getDonationDate());
+                System.out.println("Donation Type: " + donor.getDonationType());
+                System.out.println("Donation Value: " + donor.getDonationValue());
+                System.out.println("Donation Description: " + donor.getDonationDescription());
+            }
+        }
+        else{
+            System.out.println("There were no matches found");
         }
     }
     
@@ -612,6 +743,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -635,5 +767,4 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
-    String defaultState = "<Choose a location>";
 }

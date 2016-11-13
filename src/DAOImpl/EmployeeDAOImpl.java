@@ -46,12 +46,12 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         }
         catch(Exception ex){
             System.err.println("Class: EmployeeDAOImpl. Method: createEmployee");
-//            if(ps != null && !ps.isClosed()){
-//                ps.close();
-//            }
-//            if(connection != null && !connection.isClosed()){
-//                connection.close();
-//            }
+            if(ps != null && !ps.isClosed()){
+                ps.close();
+            }
+            if(connection != null && !connection.isClosed()){
+                connection.close();
+            }
             return employee; 
         }
         
@@ -73,7 +73,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         //----------------------------------------------------------------------------
         lastName = tokens[2];
         try{
-            String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeFirst = ? AND Employee.employeeLast = ?;";
+            String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeFirst = ? AND Employees.employeeLast = ?;";
             ps = connection.prepareCall(retrieveEmployee);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
@@ -87,8 +87,8 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             ArrayList<Employee> employeeList = new ArrayList<>();
             while(rs.next()){
                 Employee employee = new Employee();
-                employee.setEmployeeID(Long.valueOf(rs.getString("employeeID")));
-                employee.setLocationID(Long.valueOf(rs.getString("locationID")));
+                employee.setEmployeeID(rs.getLong("employeeID"));
+                employee.setLocationID(rs.getLong("locationID"));
                 employee.setEmployeeFirst(rs.getString("employeeFirst"));
                 employee.setEmployeeLast(rs.getString("employeeLast"));
                 employee.setEmployeeSSN(rs.getString("employeeSSN"));
@@ -115,48 +115,48 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         PreparedStatement ps = null;
         try{
             //Returns all matches of FIRSTNAME = employeeFirst
-            if(employeeFirst != null & employeeLast == null && employeeSSN == null){
-                String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeFirst = ?;";
+            if(!employeeFirst.equals("") && employeeLast.equals("") && employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeFirst = ?;";
                 ps = connection.prepareCall(retrieveEmployee);
                 ps.setString(1, employeeFirst);
             }
-            else if(employeeFirst == null && employeeLast != null && employeeSSN == null){
-                String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeLast = ?;";
+            else if(employeeFirst.equals("") && !employeeLast.equals("") && employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeLast = ?;";
                 ps = connection.prepareCall(retrieveEmployee);
                 ps.setString(1, employeeLast);
             }
-            else if(employeeFirst == null && employeeLast == null && employeeSSN != null){
-                String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeSSN = ?;";
+            else if(employeeFirst.equals("") && employeeLast.equals("") && !employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeSSN = ?;";
                 ps = connection.prepareCall(retrieveEmployee);
                 ps.setString(1, employeeSSN);
             }
-            else if(employeeFirst != null && employeeLast != null && employeeSSN != null){
-                String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeFirst = ? AND Employee.employeeLast = ?"
-                        + "AND Employee.employeeSSN = ?;";
+            else if(!employeeFirst.equals("") && !employeeLast.equals("") && !employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeFirst = ? AND Employees.employeeLast = ?"
+                        + "AND Employees.employeeSSN = ?;";
                 ps = connection.prepareCall(retrieveEmployee);
                 ps.setString(1, employeeFirst);
                 ps.setString(2, employeeLast);
                 ps.setString(3, employeeSSN);
             }
-            else if(employeeFirst != null && employeeLast != null && employeeSSN == null){
-                String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeFirst = ? AND Employee.employeeLast = ?;";
+            else if(!employeeFirst.equals("") && !employeeLast.equals("") && employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeFirst = ? AND Employees.employeeLast = ?;";
                 ps = connection.prepareCall(retrieveEmployee);
                 ps.setString(1, employeeFirst);
                 ps.setString(2, employeeLast);
             }
             //This returns all employees
-            else if(employeeFirst == null && employeeLast == null && employeeSSN == null){
-                String retrieveEmployee = "SELECT * FROM Employee;";
+            else if(employeeFirst.equals("") && employeeLast.equals("") && employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees;";
                 ps = connection.prepareCall(retrieveEmployee);
             }
-            else if(employeeFirst != null && employeeLast == null && employeeSSN != null){
-                String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeFirst = ? AND Employee.employeeSSN = ?;";
+            else if(!employeeFirst.equals("") && employeeLast.equals("") && !employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeFirst = ? AND Employees.employeeSSN = ?;";
                 ps = connection.prepareCall(retrieveEmployee);
                 ps.setString(1, employeeFirst);
                 ps.setString(2, employeeSSN);
             }
-            else if(employeeFirst == null && employeeLast != null && employeeSSN != null){
-                String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.employeeLast = ? AND Employee.employeeSSN = ?;";
+            else if(employeeFirst.equals("") && !employeeLast.equals("") && !employeeSSN.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.employeeLast = ? AND Employees.employeeSSN = ?;";
                 ps = connection.prepareCall(retrieveEmployee);
                 ps.setString(1, employeeLast);
                 ps.setString(2, employeeSSN);
@@ -164,15 +164,15 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             
             ResultSet rs = ps.executeQuery();
             
-            if(!rs.next()){
+            if(!rs.isBeforeFirst()){
                 return null;
             }
-            
+           
             ArrayList<Employee> employeeList = new ArrayList<>();
             while(rs.next()){
                 Employee employee = new Employee();
-                employee.setEmployeeID(Long.valueOf(rs.getString("employeeID")));
-                employee.setLocationID(Long.valueOf(rs.getString("locationID")));
+                employee.setEmployeeID(rs.getLong("employeeID"));
+                employee.setLocationID(rs.getLong("locationID"));
                 employee.setEmployeeFirst(rs.getString("employeeFirst"));
                 employee.setEmployeeLast(rs.getString("employeeLast"));
                 employee.setEmployeeSSN(rs.getString("employeeSSN"));
@@ -182,7 +182,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             }
             return employeeList;
         }
-        catch(Exception ex){
+        catch(SQLException ex){
             System.err.println("Class: EmployeeDAOImpl. Method: retrieveEmployee(Connection connection, String employeeFirst, String employeeLast, String employeeSSN)");
             if(ps != null && !ps.isClosed()){
                 ps.close();
@@ -194,25 +194,25 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         }
     }
     
-        public ArrayList<Employee> retrieveEmployee(Connection connection, Long locationID) throws SQLException {
+    @Override
+    public ArrayList<Employee> retrieveEmployee(Connection connection, Long locationID) throws SQLException {
         PreparedStatement ps = null;
-
         try{
-            String retrieveEmployee = "SELECT * FROM Employee WHERE Employee.locationID = ?;";
+            String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.locationID = ?;";
             ps = connection.prepareCall(retrieveEmployee);
-            ps.setString(1, (locationID.toString()));
+            ps.setString(1, locationID.toString());
             
             ResultSet rs = ps.executeQuery();
             
-            if(!rs.next()){
+            if(!rs.isBeforeFirst()){
                 return null;
             }
             
             ArrayList<Employee> employeeList = new ArrayList<>();
             while(rs.next()){
                 Employee employee = new Employee();
-                employee.setEmployeeID(Long.valueOf(rs.getString("employeeID")));
-                employee.setLocationID(Long.valueOf(rs.getString("locationID")));
+                employee.setEmployeeID(rs.getLong("employeeID"));
+                employee.setLocationID(rs.getLong("locationID"));
                 employee.setEmployeeFirst(rs.getString("employeeFirst"));
                 employee.setEmployeeLast(rs.getString("employeeLast"));
                 employee.setEmployeeSSN(rs.getString("employeeSSN"));
@@ -235,6 +235,55 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     }
     
     @Override
+    public ArrayList<Employee> retrieveEmployee(Connection connection, Long locationID, Long employeeID) throws SQLException{
+        PreparedStatement ps = null;
+        try{
+            if(!locationID.equals("Any") && !employeeID.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE Employees.locationID = ? AND Employees.employeeID = ?;";
+                ps = connection.prepareCall(retrieveEmployee);
+                ps.setString(1, locationID.toString());
+                ps.setString(2, employeeID.toString()); 
+            }
+            else if(locationID.equals("Any") && !employeeID.equals("")){
+                String retrieveEmployee = "SELECT * FROM Employees WHERE  Employees.employeeID = ?;";
+                ps = connection.prepareCall(retrieveEmployee);
+                ps.setString(1, employeeID.toString());
+            }
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(!rs.isBeforeFirst()){
+                return null;
+            }
+            
+            ArrayList<Employee> employeeList = new ArrayList<>();
+            while(rs.next()){
+                Employee employee = new Employee();
+                employee.setEmployeeID(rs.getLong("employeeID"));
+                employee.setLocationID(rs.getLong("locationID"));
+                employee.setEmployeeFirst(rs.getString("employeeFirst"));
+                employee.setEmployeeLast(rs.getString("employeeLast"));
+                employee.setEmployeeSSN(rs.getString("employeeSSN"));
+                employee.setEmployeeType(rs.getString("employeeType"));
+                employee.setDateOfHire(rs.getString("dateOfHire"));
+                employeeList.add(employee);
+            }
+            return employeeList;
+            
+        }
+        catch(Exception ex){
+            System.err.println("Class: EmployeeDAOImpl. Method: retrieveEmployee(Connection connection, Long locationID, Long employeeID)");
+            if(ps != null && !ps.isClosed()){
+                ps.close();
+            }
+            if(connection != null && !connection.isClosed()){
+                connection.close();
+            }
+            return null;
+        }
+    }
+    
+    @Override
     public boolean deleteEmployee(Connection connection, String employeeName) throws SQLException {
         PreparedStatement ps = null;
         String firstName = null;
@@ -246,7 +295,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
         //Should place an if statement here to catch if only one name was sent through
         lastName = tokens[2];
         try{
-            String deleteEmployee = "DELETE FROM Employee WHERE Employee.employeeFirst = ? AND Employee.employeeLast = ?;";
+            String deleteEmployee = "DELETE FROM Employees WHERE Employees.employeeFirst = ? AND Employees.employeeLast = ?;";
             ps = connection.prepareStatement(deleteEmployee);
             ps.setString(1, firstName);
             ps.setString(2, lastName);

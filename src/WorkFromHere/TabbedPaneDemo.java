@@ -1,4 +1,4 @@
-package DBMethodPanels;
+package WorkFromHere;
 
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
@@ -18,11 +18,17 @@ import JAMDasCutD.BasicRetrievePanel;
 import JAMDasCutD.BasicDeletePanel;
 
 public class TabbedPaneDemo extends JPanel {
+    
+//    public TabbedPaneDemo(){
+//        createAndShowGUI();
+//    }
+    
+    
+//    private void createTabbed(){
     public TabbedPaneDemo() {
         super(new GridLayout(1, 1));
         
         JTabbedPane tabbedPane = new JTabbedPane();
-//        ImageIcon icon = createImageIcon("images/middle.gif");
         
         JPanel panelCreate = new BasicCreatePanel();
         tabbedPane.addTab("Create", panelCreate);
@@ -77,9 +83,9 @@ public class TabbedPaneDemo extends JPanel {
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("JAMDasCutD Disaster Relief");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocation(new java.awt.Point(200, 200));
-        
+                
         //Add content to the window.
         frame.add(new TabbedPaneDemo(), BorderLayout.CENTER);
         
@@ -98,5 +104,17 @@ public class TabbedPaneDemo extends JPanel {
 		createAndShowGUI();
             }
         });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new TabbedPaneDemo().setVisible(true);
+//            }
+//        });
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                //Turn off metal's use of bold fonts
+//		UIManager.put("swing.boldMetal", Boolean.FALSE);
+//		new TabbedPaneDemo().setVisible(true);
+//            }
+//        });
     }
 }

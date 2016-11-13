@@ -73,22 +73,22 @@ public class DonorDAOImpl implements DonorDAO{
         //Would be a big if else statement with the current try catch being used only if neither of the names are null
         lastName = tokens[2];
         try{
-            String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorFirst = ? AND Donor.donorLast = ?;";
+            String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorFirst = ? AND Donors.donorLast = ?;";
             ps = connection.prepareCall(retrieveDonor);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
             
             ResultSet rs = ps.executeQuery();
             
-            if(!rs.next()){
+            if(!rs.isBeforeFirst()){
                 return null;
             }
             
             ArrayList<Donor> donorList = new ArrayList<>();
             while(rs.next()){
                 Donor donor = new Donor();
-                donor.setDonorID(Long.valueOf(rs.getString("donorID")));
-                donor.setLocationID(Long.valueOf(rs.getString("locationID")));
+                donor.setDonorID(rs.getLong("donorID"));
+                donor.setLocationID(rs.getLong("locationID"));
                 donor.setDonorFirst(rs.getString("donorFirst"));
                 donor.setDonorLast(rs.getString("donorLast"));
                 donor.setDonationDate(rs.getString("donationDate"));
@@ -99,7 +99,7 @@ public class DonorDAOImpl implements DonorDAO{
             return donorList;
         }
         catch(Exception ex){
-            System.err.println("Class: DonorDAOImpl. Method: retrieveDonor");
+            System.err.println("Class: DonorDAOImpl. Method: retrieveDonor(Connection connection, String donorName)");
             if(ps != null && !ps.isClosed()){
                 ps.close();
             }
@@ -117,48 +117,137 @@ public class DonorDAOImpl implements DonorDAO{
     public ArrayList<Donor> retrieveDonor(Connection connection, String donorFirst, String donorLast) throws SQLException {
         PreparedStatement ps = null;
         try{
-            if(donorFirst != null && donorLast != null){
-                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorFirst = ? AND Donor.donorLast = ?;";
+            if(!donorFirst.equals("") && !donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorFirst = ? AND Donors.donorLast = ?;";
                 ps = connection.prepareCall(retrieveDonor);
                 ps.setString(1, donorFirst);
                 ps.setString(2, donorLast);
             }
-            if(donorFirst != null && donorLast == null){
+            if(!donorFirst.equals("") && donorLast.equals("")){
                 String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorFirst = ?;";
                 ps = connection.prepareCall(retrieveDonor);
                 ps.setString(1, donorFirst);
             }
-            if(donorFirst == null && donorLast != null){
-                String retrieveDonor = "SELECT * FROM Donors WHERE Donor.donorLast = ?;";
+            if(donorFirst.equals("") && !donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorLast = ?;";
                 ps = connection.prepareCall(retrieveDonor);
                 ps.setString(1, donorLast);
             }
-            if(donorFirst == null && donorLast == null){
+            if(donorFirst.equals("") && donorLast.equals("")){
                 String retrieveDonor = "SELECT * FROM Donors;";
                 ps = connection.prepareCall(retrieveDonor);
             }
             
             ResultSet rs = ps.executeQuery();
             
-            if(!rs.next()){
+            if(!rs.isBeforeFirst()){
                 return null;
             }
             
             ArrayList<Donor> donorList = new ArrayList<>();
             while(rs.next()){
                 Donor donor = new Donor();
-                donor.setDonorID(Long.valueOf(rs.getString("donorID")));
+                donor.setDonorID(rs.getLong("donorID"));
+                donor.setLocationID(rs.getLong("locationID"));
                 donor.setDonorFirst(rs.getString("donorFirst"));
                 donor.setDonorLast(rs.getString("donorLast"));
                 donor.setDonationDate(rs.getString("donationDate"));
                 donor.setDonationType(rs.getString("donationType"));
+                donor.setDonationValue(rs.getString("donationValue"));
                 donor.setDonationDescription(rs.getString("donationDescription"));
                 donorList.add(donor);
             }
             return donorList;
         }
         catch(Exception ex){
-            System.err.println("Class: DonorDAOImpl. Method: retrieveDonor");
+            System.err.println("Class: DonorDAOImpl. Method: retrieveDonor(Connection connection, String donorFirst, String donorLast)");
+            if(ps != null && !ps.isClosed()){
+                ps.close();
+            }
+            if(connection != null && !connection.isClosed()){
+                connection.close();
+            }
+            return null;
+        }
+    }    
+    
+    @Override
+    //Might change this to an ArrayList<Donor>
+    //To account for multiple donations made by same person
+    //also when returning donations matching a name without a specific person.
+    public ArrayList<Donor> retrieveDonor(Connection connection, Long locationID, String donorFirst, String donorLast) throws SQLException {
+        PreparedStatement ps = null;
+//        if(locationID.equals("0"))
+//            locationID = "";
+        try{
+            if(locationID.equals("") && !donorFirst.equals("") && !donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorFirst = ? AND Donors.donorLast = ?;";
+                ps = connection.prepareCall(retrieveDonor);
+                ps.setString(1, donorFirst);
+                ps.setString(2, donorLast);
+            }
+            if(locationID.equals("") && !donorFirst.equals("") && donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorFirst = ?;";
+                ps = connection.prepareCall(retrieveDonor);
+                ps.setString(1, donorFirst);
+            }
+            if(locationID.equals("") && donorFirst.equals("") && !donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.donorLast = ?;";
+                ps = connection.prepareCall(retrieveDonor);
+                ps.setString(1, donorLast);
+            }
+            if(locationID.equals("") && donorFirst.equals("") && donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors;";
+                ps = connection.prepareCall(retrieveDonor);
+            }
+            if(!locationID.equals("") && !donorFirst.equals("") && !donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.locationID = ? AND Donors.donorFirst = ? AND Donors.donorLast = ?;";
+                ps = connection.prepareCall(retrieveDonor);
+                ps.setString(1, locationID.toString());
+                ps.setString(2, donorFirst);
+                ps.setString(3, donorLast);
+            }
+            if(!locationID.equals("") && !donorFirst.equals("") && donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.locationID = ? AND Donors.donorFirst = ?;";
+                ps = connection.prepareCall(retrieveDonor);
+                ps.setString(1, locationID.toString());
+                ps.setString(2, donorFirst);
+            }
+            if(!locationID.equals("") && donorFirst.equals("") && !donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.locationID = ? AND Donors.donorLast = ?;";
+                ps = connection.prepareCall(retrieveDonor);
+                ps.setString(1, locationID.toString());
+                ps.setString(2, donorLast);
+            }
+            if(!locationID.equals("") && donorFirst.equals("") && donorLast.equals("")){
+                String retrieveDonor = "SELECT * FROM Donors WHERE Donors.locationID = ?;";
+                ps = connection.prepareCall(retrieveDonor);
+                ps.setString(1, locationID.toString());
+            }
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(!rs.isBeforeFirst()){
+                return null;
+            }
+            
+            ArrayList<Donor> donorList = new ArrayList<>();
+            while(rs.next()){
+                Donor donor = new Donor();
+                donor.setDonorID(rs.getLong("donorID"));
+                donor.setLocationID(rs.getLong("locationID"));
+                donor.setDonorFirst(rs.getString("donorFirst"));
+                donor.setDonorLast(rs.getString("donorLast"));
+                donor.setDonationDate(rs.getString("donationDate"));
+                donor.setDonationType(rs.getString("donationType"));
+                donor.setDonationType(rs.getString("donationValue"));
+                donor.setDonationDescription(rs.getString("donationDescription"));
+                donorList.add(donor);
+            }
+            return donorList;
+        }
+        catch(Exception ex){
+            System.err.println("Class: DonorDAOImpl. Method: retrieveDonor(Connection connection, String donorFirst, String donorLast)");
             if(ps != null && !ps.isClosed()){
                 ps.close();
             }

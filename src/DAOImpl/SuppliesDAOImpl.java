@@ -57,13 +57,13 @@ public class SuppliesDAOImpl implements SuppliesDAO{
     public ArrayList<Supplies> retrieveSupplies(Connection connection, Long locationID) throws SQLException {
         PreparedStatement ps = null;
         try{
-            String retrieveSupplies = "SELECT * FROM Supplies WHERE Supplies.location = ?;";
+            String retrieveSupplies = "SELECT * FROM Supplies WHERE Supplies.locationID = ?;";
             ps = connection.prepareStatement(retrieveSupplies);
             ps.setString(1, locationID.toString());
             
             ResultSet rs = ps.executeQuery();
             //If no supplies are returned for given location
-            if(!rs.next()){
+            if(!rs.isBeforeFirst()){
                 return null;
             }
             
@@ -94,6 +94,7 @@ public class SuppliesDAOImpl implements SuppliesDAO{
         }
     }
 
+    
     @Override
     public boolean deleteSupplies(Connection connection, Supplies supplies) throws SQLException {
         PreparedStatement ps = null;

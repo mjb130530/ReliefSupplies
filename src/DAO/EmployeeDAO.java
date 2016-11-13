@@ -25,6 +25,8 @@ public interface EmployeeDAO {
     //Can use this to return all employees with null for lastNames and null for firstNames
     ArrayList<Employee> retrieveEmployee(Connection connection, String employeeName) throws SQLException;
     ArrayList<Employee> retrieveEmployee(Connection connection, String employeeFirst, String employeeLast, String employeeSSN) throws SQLException;
+    ArrayList<Employee> retrieveEmployee(Connection connection, Long locationID) throws SQLException;
+    ArrayList<Employee> retrieveEmployee(Connection connection, Long locationID, Long employeeID) throws SQLException;
     
     boolean deleteEmployee(Connection connection, String employeeName) throws SQLException;
     
