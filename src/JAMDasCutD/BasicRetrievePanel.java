@@ -530,6 +530,10 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -561,7 +565,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
+        }
+        jTextField5.setText("");
+        jTextField6.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -587,6 +593,12 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton4.setEnabled(false);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -594,6 +606,8 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jButton2.setEnabled(true);
         jButton3.setEnabled(false);
         jButton4.setEnabled(false);
+        jTextField5.setText("");
+        jTextField6.setText("");
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
@@ -601,6 +615,10 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jButton2.setEnabled(false);
         jButton3.setEnabled(true);
         jButton4.setEnabled(false);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
@@ -608,6 +626,12 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton4.setEnabled(true);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
     }//GEN-LAST:event_jRadioButton4ActionPerformed
     
     private void groupButton( ) {

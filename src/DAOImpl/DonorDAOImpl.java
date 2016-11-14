@@ -270,7 +270,7 @@ public class DonorDAOImpl implements DonorDAO{
         //Should place an if statement here to catch if only one name was sent through
         lastName = tokens[2];
         try{
-            String deleteDonor = "DELETE FROM Donor WHERE Donor.donorFirst = ? AND Donor.donorLast = ?;";
+            String deleteDonor = "DELETE FROM Donors WHERE Donors.donorFirst = ? AND Donors.donorLast = ?;";
             ps = connection.prepareStatement(deleteDonor);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
@@ -295,7 +295,7 @@ public class DonorDAOImpl implements DonorDAO{
     public boolean deleteDonor(Connection connection, String donorFirst, String donorLast) throws SQLException {
         PreparedStatement ps = null;
         try{
-            String deleteDonor = "DELETE FROM Donor WHERE Donor.donorFirst = ? AND Donor.donorLast = ?;";
+            String deleteDonor = "DELETE FROM Donors WHERE Donors.donorFirst = ? AND Donors.donorLast = ?;";
             ps = connection.prepareStatement(deleteDonor);
             ps.setString(1, donorFirst);
             ps.setString(2, donorLast);
@@ -314,4 +314,27 @@ public class DonorDAOImpl implements DonorDAO{
         }
     }
     
+    @Override
+    public boolean deleteDonor(Connection connection, Long locationID, String donorFirst, String donorLast) throws SQLException {
+        PreparedStatement ps = null;
+        try{
+            String deleteDonor = "DELETE FROM Donors WHERE Donors.locationID = ? AND Donors.donorFirst = ? AND Donors.donorLast = ?;";
+            ps = connection.prepareStatement(deleteDonor);
+            ps.setString(1, locationID.toString());
+            ps.setString(2, donorFirst);
+            ps.setString(3, donorLast);
+            ps.execute();
+            return true;
+        }
+        catch(Exception ex){
+            System.err.println("Class: DonorDAOImpl. Method: deleteDonor(Connection connection, Long locationID, String donorFirst, String donorLast)");
+            if(ps != null && !ps.isClosed()){
+                ps.close();
+            }
+            if(connection != null && !connection.isClosed()){
+                connection.close();
+            }
+            return false;
+        }
+    }
 }

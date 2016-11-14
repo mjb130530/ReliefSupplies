@@ -5,10 +5,17 @@
  */
 package JAMDasCutD;
 
+import DAOImpl.DonorDAOImpl;
+import DAOImpl.LocationDAOImpl;
 import DBConnection.DBConnection;
+import Entity.Donor;
+import Entity.Location;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 import javax.swing.ButtonGroup;
 
@@ -83,6 +90,11 @@ public class BasicDeletePanel extends javax.swing.JPanel {
 
         jButton1.setText("Delete");
         jButton1.setEnabled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -166,7 +178,7 @@ public class BasicDeletePanel extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                         .addComponent(jButton2)))
                 .addContainerGap())
         );
@@ -209,6 +221,11 @@ public class BasicDeletePanel extends javax.swing.JPanel {
 
         jButton3.setText("Delete");
         jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("First Name");
 
@@ -219,22 +236,23 @@ public class BasicDeletePanel extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(326, 326, 326)
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)))
                 .addContainerGap())
         );
@@ -251,7 +269,7 @@ public class BasicDeletePanel extends javax.swing.JPanel {
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(0, 29, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
@@ -372,12 +390,65 @@ public class BasicDeletePanel extends javax.swing.JPanel {
         jButton4.setEnabled(true);
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    //Delete a donor
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DonorDAOImpl donorDAO = new DonorDAOImpl();
+        boolean donorDeleted = false;
+        String locationString = jComboBox3.getSelectedItem().toString();
+        String firstName = jTextField5.getText();
+        String lastName = jTextField6.getText();
+        
+        try {
+            long donorsLocation = provideLocationID(locationString);
+            donorDeleted = donorDAO.deleteDonor(getConnection(), donorsLocation, firstName, lastName);
+            //*******Problem*******
+            if(donorDeleted){
+                System.out.println("Donor " + firstName + " " + lastName +" was deleted.");
+            }
+            else{
+                System.out.println("Donor " + firstName + " " + lastName +" was unable to be deleted");
+            }
+        }
+        catch (SQLException | IOException ex) {
+            Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        donorDeleted = false;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     private void groupButton( ) {
         ButtonGroup bg1 = new ButtonGroup( );
         bg1.add(jRadioButton1);
         bg1.add(jRadioButton2);
         bg1.add(jRadioButton3);
         bg1.add(jRadioButton4);
+    }
+    
+    private Long provideLocationID(String locationIDNeeded){
+        LocationDAOImpl locationDAO = new LocationDAOImpl();
+        Location location;// = new Location();
+        long locationIDprovided = 0;
+
+        String cityToken;
+        String locationStateToken;
+        String fullLocation = locationIDNeeded;
+        String delims = "[,]+";
+        String[] tokens = fullLocation.split(delims);
+        cityToken = tokens[0];
+        locationStateToken = tokens[1].trim();
+        
+        try {
+            location = locationDAO.retrieveLocation(getConnection(), cityToken, locationStateToken);
+            locationIDprovided = location.getLocationID();
+        }
+        catch (SQLException | IOException ex) {
+                Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return locationIDprovided;
+        
     }
     
     private Connection getConnection() throws SQLException, IOException{

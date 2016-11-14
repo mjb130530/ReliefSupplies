@@ -25,5 +25,5 @@ public interface DonorDAO {
     
     boolean deleteDonor(Connection connection, String donorName) throws SQLException;
     boolean deleteDonor(Connection connection, String donorFirst, String donorLast) throws SQLException;
-    
+    boolean deleteDonor(Connection connection, Long locationID, String donorFirst, String donorLast) throws SQLException;
 }

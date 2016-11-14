@@ -653,6 +653,7 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         location.setRent(Long.valueOf(jTextField9.getText()));
         location.setElectricity(Long.valueOf(jTextField10.getText()));
         location.setWater(Long.valueOf(jTextField11.getText()));
+        //if()
         try {
             locationDAO.createLocation(getConnection(), location);
             
@@ -663,6 +664,17 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         catch (SQLException | IOException ex) {
             Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField11.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //*******Problem*******
@@ -687,6 +699,10 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         catch (SQLException | IOException ex) {
             Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jTextField12.setText("");
+        jTextField13.setText("");
+        jTextField14.setText("XXX-XX-XXXX");
+        jTextField15.setText("MM/DD/YYYY");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     //*******Problem*******
@@ -712,6 +728,16 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         catch (SQLException | IOException ex) {
             Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jTextField12.setText("");
+        jTextField13.setText("");
+        jTextField14.setText("XXX-XX-XXXX");
+        jTextField15.setText("MM/DD/YYYY");
+        jTextField16.setText("");
+        jTextField17.setText("");
+        jTextField18.setText("MM/DD/YYYY");
+        jTextField19.setText("");
+        jTextField20.setText("");
+        jTextField21.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     //*******Problem*******
@@ -735,6 +761,10 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         catch (SQLException | IOException ex) {
             Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jTextField22.setText("");
+        jTextField23.setText("");
+        jTextField24.setText("");
+        jTextField25.setText("");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField18FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField18FocusGained
@@ -752,6 +782,20 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton4.setEnabled(false);
+        jTextField12.setText("");
+        jTextField13.setText("");
+        jTextField14.setText("XXX-XX-XXXX");
+        jTextField15.setText("MM/DD/YYYY");
+        jTextField16.setText("");
+        jTextField17.setText("");
+        jTextField18.setText("MM/DD/YYYY");
+        jTextField19.setText("");
+        jTextField20.setText("");
+        jTextField21.setText("");
+        jTextField22.setText("");
+        jTextField23.setText("");
+        jTextField24.setText("");
+        jTextField25.setText("");
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -759,6 +803,27 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         jButton2.setEnabled(true);
         jButton3.setEnabled(false);
         jButton4.setEnabled(false);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField11.setText("");
+        jTextField16.setText("");
+        jTextField17.setText("");
+        jTextField18.setText("MM/DD/YYYY");
+        jTextField19.setText("");
+        jTextField20.setText("");
+        jTextField21.setText("");
+        jTextField22.setText("");
+        jTextField23.setText("");
+        jTextField24.setText("");
+        jTextField25.setText("");
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
@@ -766,6 +831,25 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         jButton2.setEnabled(false);
         jButton3.setEnabled(true);
         jButton4.setEnabled(false);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField11.setText("");
+        jTextField12.setText("");
+        jTextField13.setText("");
+        jTextField14.setText("XXX-XX-XXXX");
+        jTextField15.setText("MM/DD/YYYY");
+        jTextField22.setText("");
+        jTextField23.setText("");
+        jTextField24.setText("");
+        jTextField25.setText("");
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
@@ -773,6 +857,27 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         jButton2.setEnabled(false);
         jButton3.setEnabled(false);
         jButton4.setEnabled(true);
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField11.setText("");
+        jTextField12.setText("");
+        jTextField13.setText("");
+        jTextField14.setText("XXX-XX-XXXX");
+        jTextField15.setText("MM/DD/YYYY");
+        jTextField16.setText("");
+        jTextField17.setText("");
+        jTextField18.setText("MM/DD/YYYY");
+        jTextField19.setText("");
+        jTextField20.setText("");
+        jTextField21.setText("");
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void groupButton( ) {
