@@ -5,7 +5,19 @@
  */
 package WorkFromHere;
 
+import DAO.MemberLoginDAO;
+import DAOImpl.MemberLoginDAOImpl;
+import DBConnection.DBConnection2;
+import Entity.Member;
+import JAMDasCutD.StupidBasic;
+import java.io.IOException;
 import javax.swing.Action;
+import java.security.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.DataSource;
 
 /**
  *
@@ -36,6 +48,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("JAMDasCutD Login");
@@ -77,6 +90,9 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Username and/or Password is/are incorrect");
+        jLabel3.setVisible(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,8 +117,11 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(68, 68, 68)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +136,9 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(28, 28, 28)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,37 +150,36 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String userName = jTextField1.getText();
-        char[] password = jPasswordField1.getPassword();
+        char[] tempPassword = jPasswordField1.getPassword();
+        String password = new String(tempPassword);
         System.out.println("username: " + userName);
-        System.out.print("password: ");
-        for(int i=0; i < password.length; i++){
-            System.out.print(password[i]);
-        }
+//        System.out.print("password: ");
+//        for(int i=0; i < tempPassword.length; i++){
+//            System.out.print(tempPassword[i]);
+//        }
         System.out.println("password: " + password);
         //String password = new jline.ConsoleReader().readLine(new Character('*'));
         
         boolean usingForTestingPurposes = true;
         
         //This is where we need to verify their credentials.
-        if(usingForTestingPurposes){
-            
-            //#####################################################
-            //#####################################################
-            //This is where security can be added
-//            if(userName(is correct) && password(is correct)){
-//                get userName permissions send to the next JFrame 
-//                //gotoTabbedPane();
-//                this.dispose();
-//                //I modified TabbedPaneDemo.java this works but probably not best practice
-//                RefactorThisShit refactorThis = new RefactorThisShit();
-//                refactorThis.setVisible(false);
-//            }
-//            else{
-//                    System.out.println("Could not retrieve accoutn. Username or Password incorrect");
-//            }
-            //This is where security can be added
-            //#####################################################
-            //#####################################################
+        //if(usingForTestingPurposes){
+        
+        
+        MemberLoginDAO memberLoginDAO = new MemberLoginDAOImpl();
+        Member member = new Member();
+        
+        try {
+            member = memberLoginDAO.retrieveMember(getConnection(), userName, password);
+        }
+        catch (SQLException | IOException ex) {
+            Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(member != null){
+            System.out.println("YYYYYYYYYAAAAAAAAAAAAAAYYYYYYYYYYY");
+        
+
             
             //gotoTabbedPane();
             this.dispose();
@@ -167,6 +187,10 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
             RefactorThisShit refactorThis = new RefactorThisShit();
             refactorThis.setVisible(false);
         }
+        else{
+            jLabel3.setVisible(true);
+        }
+        //}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -185,6 +209,13 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
         this.dispose();
         TabbedPaneDemo tabbedPaneDemo = new TabbedPaneDemo();
         tabbedPaneDemo.setVisible(true);
+    }
+    
+    private Connection getConnection() throws SQLException, IOException{
+        DataSource dataSource = DBConnection2.getDataSource();
+        Connection connection = dataSource.getConnection();
+        //connection.setAutoCommit(false);
+        return connection;
     }
     
     /**
@@ -224,6 +255,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

@@ -9,13 +9,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import JFrameCards.InsertDonor;
-import JFrameCards.InsertEmployee;
-import JFrameCards.InsertSupply;
-import JFrameCards.InsertLocation;
+//import JFrameCards.InsertDonor;
+//import JFrameCards.InsertEmployee;
+//import JFrameCards.InsertSupply;
+//import JFrameCards.InsertLocation;
 
 //----------------
-import JFrameCards.DonorCard;
+//import JFrameCards.DonorCard;
 //---------------------
 
 /**
@@ -89,14 +89,14 @@ public class InsertCards implements ItemListener{
     
     public static void main(String[] args) {
         /* Use an appropriate Look and Feel */
-        try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        /* Turn off metal's use of bold fonts */
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
+//        try {
+//            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+//            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+//        } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException ex) {
+//            ex.printStackTrace();
+//        }
+//        /* Turn off metal's use of bold fonts */
+//        UIManager.put("swing.boldMetal", Boolean.FALSE);
         
         //Schedule a job for the event dispatch thread:
         //creating and showing this application's GUI.
