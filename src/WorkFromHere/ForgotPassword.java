@@ -5,6 +5,15 @@
  */
 package WorkFromHere;
 
+import DAOImpl.RecoveryDAOImpl;
+import DBConnection.DBConnection2;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.DataSource;
+
 /**
  *
  * @author Matthew
@@ -27,7 +36,6 @@ public class ForgotPassword extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -43,11 +51,9 @@ public class ForgotPassword extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(750, 300));
 
-        jLabel1.setText("jLabel1");
+        jLabel2.setText("Username");
 
-        jLabel2.setText("jLabel2");
-
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Phone Number");
 
         jButton1.setText("Reset Password");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +92,6 @@ public class ForgotPassword extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -107,9 +112,7 @@ public class ForgotPassword extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -138,29 +141,36 @@ public class ForgotPassword extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //###########################################
-        //Will have permission to ensure they can reset password
-        //###########################################
+        RecoveryDAOImpl recoveryDAOImpl = new RecoveryDAOImpl();
+        
+        String userName = jTextField1.getText();
+        String phone = jTextField2.getText();
+        String password = null;
+
         boolean permissionToReset = true;//instead of true can put a method here to check
-        if(permissionToReset && jTextField3.getText().equals(jTextField4.getText())){
-            //###########################################
-            //Will need a method to actually reset password
-            //###########################################
+        
+        if (permissionToReset && jTextField3.getText().equals(jTextField4.getText())) {
             jLabel4.setVisible(true);
-        }
-        else if (permissionToReset == false){
+            password = jTextField4.getText();
+            try {
+                recoveryDAOImpl.resetPassword(getConnection(), userName, phone, password);
+            } catch (SQLException ex) {
+                Logger.getLogger(ForgotPassword.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ForgotPassword.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (permissionToReset == false) {
             jLabel4.setVisible(true);
             jLabel4.setText("Answered incorrectly");
             jTextField1.setText("");
             jTextField2.setText("");
-        }
-        else if (permissionToReset && !jTextField3.getText().equals(jTextField4.getText())){
+        } else if (permissionToReset && !jTextField3.getText().equals(jTextField4.getText())) {
             jLabel4.setVisible(true);
             jLabel4.setText("Passwords do not match");
             jTextField3.setText("");
             jTextField4.setText("");
         }
-            
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -203,11 +213,17 @@ public class ForgotPassword extends javax.swing.JFrame {
             }
         });
     }
+    
+    private Connection getConnection() throws SQLException, IOException {
+        DataSource dataSource = DBConnection2.getDataSource();
+        Connection connection = dataSource.getConnection();
+        //connection.setAutoCommit(false);
+        return connection;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

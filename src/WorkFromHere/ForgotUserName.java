@@ -5,6 +5,15 @@
  */
 package WorkFromHere;
 
+import DAOImpl.RecoveryDAOImpl;
+import DBConnection.DBConnection2;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.DataSource;
+
 /**
  *
  * @author Matthew
@@ -43,9 +52,9 @@ public class ForgotUserName extends javax.swing.JFrame {
 
         jLabel1.setText("Sucks you forgot your userName");
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("E-mail");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Phone #");
 
         jButton1.setText("Retrieve Username");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -57,7 +66,7 @@ public class ForgotUserName extends javax.swing.JFrame {
         jLabel4.setText("Username is:");
         jLabel4.setVisible(false);
 
-        jLabel5.setText("this will display the userName");
+        jLabel5.setText(" ");
         jLabel5.setVisible(false);
 
         jButton2.setText("Sign In");
@@ -94,9 +103,9 @@ public class ForgotUserName extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 48, Short.MAX_VALUE))
+                        .addGap(0, 70, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2)))
@@ -130,13 +139,28 @@ public class ForgotUserName extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //We will put a check here to look up the username if they 
-        //answer whatever correct
-        if(true){
+        String email = jTextField1.getText();
+        String phone = jTextField2.getText();
+        String userName = null;
+        RecoveryDAOImpl recoveryDAOImpl = new RecoveryDAOImpl();
+        
+        try {
+            userName = recoveryDAOImpl.getUser(getConnection(), email, phone);
+        } catch (SQLException ex) {
+            Logger.getLogger(ForgotUserName.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ForgotUserName.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(userName != null){
             jLabel4.setVisible(true);
             jLabel5.setVisible(true);
-            jLabel5.setText("will use a method here to get password");
+            jLabel5.setText(userName);
         }
+        else{
+            jLabel5.setText("No user with matching e-mail and phone number found.");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -179,7 +203,14 @@ public class ForgotUserName extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    private Connection getConnection() throws SQLException, IOException{
+        DataSource dataSource = DBConnection2.getDataSource();
+        Connection connection = dataSource.getConnection();
+        //connection.setAutoCommit(false);
+        return connection;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

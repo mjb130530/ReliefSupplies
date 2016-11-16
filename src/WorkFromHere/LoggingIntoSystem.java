@@ -90,7 +90,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Username and/or Password is/are incorrect");
+        jLabel3.setText("Invalid credentials, try again");
         jLabel3.setVisible(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,7 +119,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
                         .addGap(68, 68, 68)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(76, 76, 76)
                         .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -136,9 +136,9 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,9 +149,26 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
         String userName = jTextField1.getText();
         char[] tempPassword = jPasswordField1.getPassword();
         String password = new String(tempPassword);
+                
+        
+        StringBuilder sb = new StringBuilder();
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            digest.update(password.getBytes());
+            byte[] newPass = digest.digest();
+            for(byte bytes : newPass){
+                sb.append(String.format("%02x", bytes & 0xff));
+            }
+            password = sb.toString();
+        } catch (Exception ex) {
+            System.err.println("Class: LoggingIntoSystem Method: jButton1ActionPerformed");
+            Logger.getLogger(LoggingIntoSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         System.out.println("username: " + userName);
 //        System.out.print("password: ");
 //        for(int i=0; i < tempPassword.length; i++){
@@ -177,10 +194,6 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
         }
         
         if(member != null){
-            System.out.println("YYYYYYYYYAAAAAAAAAAAAAAYYYYYYYYYYY");
-        
-
-            
             //gotoTabbedPane();
             this.dispose();
             //I modified TabbedPaneDemo.java this works but probably not best practice
