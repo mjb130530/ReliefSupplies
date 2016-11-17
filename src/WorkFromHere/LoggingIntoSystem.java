@@ -202,6 +202,10 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
         }
         else{
             jLabel3.setVisible(true);
+            errorCount += 1;
+            if(errorCount>5){
+                this.dispose();
+            }
         }
         //}
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -262,6 +266,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
         });
     }
 
+    private int errorCount = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
