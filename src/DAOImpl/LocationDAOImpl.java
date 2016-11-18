@@ -234,7 +234,7 @@ public class LocationDAOImpl implements LocationDAO{
             
             ResultSet rs = ps.executeQuery();
             //Is this needed? Is it not caught by the catch statement
-            if(!rs.next()){
+            if(!rs.isBeforeFirst()){
                 return null;
             }
             

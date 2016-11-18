@@ -15,6 +15,9 @@ import JAMDasCutD.BasicCreatePanel;
 import JAMDasCutD.BasicRetrievePanel;
 //import JAMDasCutD.BasicUpdatePanel;
 import JAMDasCutD.BasicDeletePanel;
+import JAMDasCutD.BasicUpdateAlternative;
+import JAMDasCutD.BasicUpdatePanel;
+import JFrameCards.Delete3;
 
 public class TabbedPaneDemo extends JPanel {
     public TabbedPaneDemo() {
@@ -30,15 +33,17 @@ public class TabbedPaneDemo extends JPanel {
         tabbedPane.addTab("Retrieve", panelRetrieve);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
-        JComponent panel4 = makeTextPanel("Not implemented yet");
-        //JPanel panelUpdate = new BasicUpdatePanel();
-        panel4.setPreferredSize(new Dimension(410, 50));
-        tabbedPane.addTab("Update", panel4);
+        JPanel panelUpdate = new BasicUpdatePanel();
+        tabbedPane.addTab("Update", panelUpdate);
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
         
         JPanel panelDelete = new BasicDeletePanel();
         tabbedPane.addTab("Delete", panelDelete);
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+        
+        JPanel panelNewRetrieve = new Delete3();
+        tabbedPane.addTab("New Retrieve", panelNewRetrieve);
+        tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
         
         //Add the tabbed pane to this panel.
         add(tabbedPane);

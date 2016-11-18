@@ -169,35 +169,22 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
             Logger.getLogger(LoggingIntoSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        System.out.println("username: " + userName);
-//        System.out.print("password: ");
-//        for(int i=0; i < tempPassword.length; i++){
-//            System.out.print(tempPassword[i]);
-//        }
-        System.out.println("password: " + password);
-        //String password = new jline.ConsoleReader().readLine(new Character('*'));
-        
-        boolean usingForTestingPurposes = true;
-        
-        //This is where we need to verify their credentials.
-        //if(usingForTestingPurposes){
-        
-        
+//        System.out.println("username: " + userName);
+//        System.out.println("password: " + password);
+
         MemberLoginDAO memberLoginDAO = new MemberLoginDAOImpl();
         Member member = new Member();
-        
+        String errorString = "";
         try {
             member = memberLoginDAO.retrieveMember(getConnection(), userName, password);
         }
         catch (SQLException | IOException ex) {
-            Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
+            errorString = "error";
         }
         
-        if(member != null){
-            //gotoTabbedPane();
+        if(member != null && !errorString.equals("error")){
             this.dispose();
-            //I modified TabbedPaneDemo.java this works but probably not best practice
-            RefactorThisShit refactorThis = new RefactorThisShit();
+            CreatedTabbedPane refactorThis = new CreatedTabbedPane();
             refactorThis.setVisible(false);
         }
         else{
@@ -207,7 +194,6 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
                 this.dispose();
             }
         }
-        //}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

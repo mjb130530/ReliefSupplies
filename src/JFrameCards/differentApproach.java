@@ -5,24 +5,22 @@
  */
 package JFrameCards;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-//import JFrameCards.InsertDonor;
-//import JFrameCards.InsertEmployee;
-//import JFrameCards.InsertSupply;
-//import JFrameCards.InsertLocation;
-
-//----------------
-//import JFrameCards.DonorCard;
-//---------------------
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Container;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Matthew
  */
-public class InsertCards implements ItemListener{//, LayoutManager{
+public class differentApproach implements ItemListener{
+  //-----------------------
+    
     JPanel cards;
     final static String INSERTDONOR = "Add a Donor";
     final static String INSERTEMPLOYEE = "Add an employee";
@@ -34,7 +32,9 @@ public class InsertCards implements ItemListener{//, LayoutManager{
 //    }
     
     //public void addComponentToPane(Container pane){
-    public void addComponentToPane(Container pane){  
+    //public void addComponentToPane(Container pane){  
+        private void initComponents(){
+            Container pane = new Container();
 //        JPanel cards;
         JPanel comboBoxPane = new JPanel(); //use FlowLayout
         String comboBoxItems[] = { INSERTDONOR, INSERTEMPLOYEE, INSERTSUPPLY, INSERTLOCATION };
@@ -75,16 +75,16 @@ public class InsertCards implements ItemListener{//, LayoutManager{
     
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("CardLayoutDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel jPanel1 = new JPanel();
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
         InsertCards demo = new InsertCards();
-        demo.addComponentToPane(frame.getContentPane());
+        demo.addComponentToPane(jPanel1);
         
         //Display the window.
-        frame.pack();
-        frame.setVisible(true);
+        //jPanel1.pack();
+        jPanel1.setVisible(true);
     }
     
     public static void main(String[] args) {
@@ -133,3 +133,4 @@ public class InsertCards implements ItemListener{//, LayoutManager{
 //    }
     
 }
+

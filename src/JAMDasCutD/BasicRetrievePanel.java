@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -86,6 +87,8 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jComboBox6 = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setMinimumSize(new java.awt.Dimension(825, 650));
         setPreferredSize(new java.awt.Dimension(825, 650));
@@ -109,7 +112,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<Choose a location>", "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations(defaultChoose)));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<Select a City>", "Dallas", "Palo Alto", "Denver", "New York", "Charlotte" }));
 
@@ -130,7 +133,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addGap(74, 74, 74)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +196,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
             }
         });
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Any", "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations(defaultAny)));
 
         jLabel6.setText("First Name");
 
@@ -289,7 +292,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
 
         jLabel3.setText("Location");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Any", "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations(defaultAny)));
 
         jLabel12.setText("First Name");
 
@@ -360,7 +363,7 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
             }
         });
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Any", "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations(defaultAny)));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -394,6 +397,21 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -411,7 +429,8 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                             .addComponent(jRadioButton3)
                             .addComponent(jRadioButton2)
                             .addComponent(jRadioButton1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -433,7 +452,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 .addComponent(jRadioButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -461,6 +482,17 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 location = locationDAO.retrieveLocation(getConnection(), selectedLocation);
                 //*******Problem*******
                 printLocation(location);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                    },
+                    getTableTitles("Location")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -484,6 +516,17 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), firstName, lastName, ssn);
                 //*******Problem*******
                 printEmployees(employeeList);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                    },
+                    getTableTitles("Employee")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -498,6 +541,17 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation, employeeIDLong);
                 //*******Problem*******
                 printEmployees(employeeList);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                    },
+                    getTableTitles("Employee")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -511,6 +565,17 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation);
                 //*******Problem*******
                 printEmployees(employeeList);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                    },
+                    getTableTitles("Employee")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -525,6 +590,17 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation, employeeIDLong);
                 //*******Problem*******
                 printEmployees(employeeList);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                    },
+                    getTableTitles("Employee")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -561,6 +637,17 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 donorList = donorDAO.retrieveDonor(getConnection(), donorsLocation, firstName, lastName);
                 //*******Problem*******
                 printDonors(donorList);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                    },
+                    getTableTitles("Donor")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -579,8 +666,14 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         if(!locationString.equals("Any")){
             try{
                 supplyList = supplyDAO.retrieveSupplies(getConnection(), suppliesLocation);
+                //supplyList.toArray();
                 //*******Problem*******
                 printSupplies(supplyList);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                    supplyList.toArray()},
+                    getTableTitles("Supply")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -641,6 +734,39 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         bg1.add(jRadioButton3);
         bg1.add(jRadioButton4);
     }
+    
+    private String[] getTableTitles(String typeOfRS){
+        String[] tableTitles;
+        if(typeOfRS.equals("Location")){
+            tableTitles = new String [] {"ID", "State", "County", "City", "Street", "Zipcode", "City Taxes", "State Taxes", "Rent", "Electricity", "Water"};
+        }
+        else if (typeOfRS.equals("Employee")){
+            tableTitles = new String [] {"ID", "LocationID", "First Name", "Last Name", "SSN", "Type", "Hired on"};      
+        }
+        else if (typeOfRS.equals("Donor")){
+            tableTitles = new String [] {"DonorID", "LocationID", "First Name", "Last Name", "Donation Date", "Donation Type", "Value", "Description"};
+        }
+        else{
+            tableTitles = new String [] {"Supply Name", "Type", "Quantity", "Description"};
+        }
+        return tableTitles;
+    }
+    
+//    private String[][] getRSMatrix(Object objectArray){
+//        //String[][] matrixToPrint new String[objectArray.size()];//[];
+//        Object[][] matrixToPrint = new Object[rows][columns];
+//        int row = 0;
+//        if(objectArray != null){
+//            for(int i = 0; i < objectArray.; i++){
+//                
+//            }
+//            
+//        }
+//        else{
+//            System.out.println("There were no matches found");
+//            return null;
+//        }
+//    }
     
     private void printLocation(Location location){
         if(location != null){
@@ -704,17 +830,35 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         }
     }
     
+//    private void printEmployees(ArrayList<Employee> employees){
+//        if(employees != null){
+//            int numberOfEmployees = employees.size();    
+//            for(int i = 0; i<numberOfEmployees; i++){
+//                Employee employee = employees.get(i);
+//                System.out.println("Employee ID: " + employee.getEmployeeID());
+//                System.out.println("Location ID: " + employee.getLocationID());
+//                System.out.println("First Name: " + employee.getEmployeeFirst());
+//                System.out.println("Last Name: " + employee.getEmployeeLast());
+//                System.out.println("SSN: " + employee.getEmployeeSSN());
+//                System.out.println("Type: " + employee.getEmployeeType());
+//                System.out.println("Date Of Hire: " + employee.getDateOfHire());
+//            }
+//        }
+//        else{
+//            System.out.println("There were no matches found");
+//        }
+//    }
+    
     private void printSupplies(ArrayList<Supplies> supplies){
         if(supplies != null){
             int supplySize = supplies.size();
             for(int i = 0; i<supplySize; i++){
-                System.out.println("Supply number " + (i+1) + " out of " + supplySize);
                 Supplies supply = supplies.get(i);
-                System.out.println("Location ID " + supply.getLocationID());
-                System.out.println("Supply Name: " + supply.getSupplyName());
-                System.out.println("Supply Type: " + supply.getSupplyType());
-                System.out.println("Supply Quantity: " + supply.getSupplyQuantity());
-                System.out.println("Supply Description: " + supply.getSupplyDescription());
+                System.out.println("LocationID: " + supply.getLocationID());
+                System.out.println("Supply: " + supply.getSupplyName());
+                System.out.println("Type: " + supply.getSupplyType());
+                System.out.println("Quantity: " + supply.getSupplyQuantity());
+                System.out.println("Description: " + supply.getSupplyDescription());
             }
         }
         else{
@@ -751,6 +895,68 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         return connection;
     }
 
+    //Method for filling the comboBoxes.
+    private String[] getLocations(String defaultField){    
+        LocationDAOImpl locationDAO = new LocationDAOImpl();
+        ArrayList<Location> locationList;
+        String[] locationListing;
+        try {
+            locationList = locationDAO.retrieveAllLocations(getConnection());
+        } catch (IOException | SQLException ex) {
+            Logger.getLogger(BasicUpdatePanel.class.getName()).log(Level.SEVERE, null, ex);
+            String temp = "No locations found";
+            locationListing = new String[]{temp};
+            return locationListing;
+        }
+        if(locationList != null){
+            locationListing = new String[locationList.size()+1];
+            locationListing[0] = defaultField;
+            for(int i = 0; i < locationList.size(); i++){
+                Location tempLocation = locationList.get(i);
+                String temp = tempLocation.getCity() + ", " + tempLocation.getLocationState();
+                locationListing[i+1] = temp;
+            }
+            return locationListing;
+        }
+        else{
+            String temp = "No locations found";
+            locationListing = new String[]{temp};
+            return locationListing;
+        }
+    }
+    
+        //Method for filling the comboBoxes.
+    private String[] getLocationsChoose(){    
+        LocationDAOImpl locationDAO = new LocationDAOImpl();
+        ArrayList<Location> locationList;
+        String[] locationListing;
+        try {
+            locationList = locationDAO.retrieveAllLocations(getConnection());
+        } catch (IOException | SQLException ex) {
+            Logger.getLogger(BasicUpdatePanel.class.getName()).log(Level.SEVERE, null, ex);
+            String temp = "No locations found";
+            locationListing = new String[]{temp};
+            return locationListing;
+        }
+        if(locationList != null){
+            locationListing = new String[locationList.size()];
+            locationListing[0] = "<Choose a location>";
+            for(int i = 1; i <= locationList.size(); i++){
+                Location tempLocation = locationList.get(i);
+                String temp = tempLocation.getCity() + ", " + tempLocation.getLocationState();
+                locationListing[i] = temp;
+            }
+            return locationListing;
+        }
+        else{
+            String temp = "No locations found";
+            locationListing = new String[]{temp};
+            return locationListing;
+        }
+    }
+    
+    private String defaultChoose = "<Choose a location>";
+    private String defaultAny = "Any";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -784,6 +990,8 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

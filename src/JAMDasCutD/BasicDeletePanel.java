@@ -86,7 +86,7 @@ public class BasicDeletePanel extends javax.swing.JPanel {
 
         jLabel1.setText("Location");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations()));
 
         jButton1.setText("Delete");
         jButton1.setEnabled(false);
@@ -137,7 +137,7 @@ public class BasicDeletePanel extends javax.swing.JPanel {
 
         jLabel2.setText("Location");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations()));
 
         jButton2.setText("Delete");
         jButton2.setEnabled(false);
@@ -217,7 +217,7 @@ public class BasicDeletePanel extends javax.swing.JPanel {
 
         jLabel3.setText("Location");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations()));
 
         jButton3.setText("Delete");
         jButton3.setEnabled(false);
@@ -287,7 +287,7 @@ public class BasicDeletePanel extends javax.swing.JPanel {
 
         jLabel4.setText("Location");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dallas, Texas", "Palo Alto, California", "Denver, Colorado", "New York, New York", "Charlotte, North Carolina" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(getLocations()));
 
         jButton4.setText("Delete");
         jButton4.setEnabled(false);
@@ -449,6 +449,35 @@ public class BasicDeletePanel extends javax.swing.JPanel {
         }
         return locationIDprovided;
         
+    }
+    
+    //Method for filling the comboBoxes.
+    private String[] getLocations(){    
+        LocationDAOImpl locationDAO = new LocationDAOImpl();
+        ArrayList<Location> locationList;
+        String[] locationListing;
+        try {
+            locationList = locationDAO.retrieveAllLocations(getConnection());
+        } catch (IOException | SQLException ex) {
+            Logger.getLogger(BasicUpdatePanel.class.getName()).log(Level.SEVERE, null, ex);
+            String temp = "No locations found";
+            locationListing = new String[]{temp};
+            return locationListing;
+        }
+        if(locationList != null){
+            locationListing = new String[locationList.size()];
+            for(int i = 0; i < locationList.size(); i++){
+                Location tempLocation = locationList.get(i);
+                String temp = tempLocation.getCity() + ", " + tempLocation.getLocationState();
+                locationListing[i] = temp;
+            }
+            return locationListing;
+        }
+        else{
+            String temp = "No locations found";
+            locationListing = new String[]{temp};
+            return locationListing;
+        }
     }
     
     private Connection getConnection() throws SQLException, IOException{

@@ -119,14 +119,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Dallas, Texas"/>
-                <StringItem index="1" value="Palo Alto, California"/>
-                <StringItem index="2" value="Denver, Colorado"/>
-                <StringItem index="3" value="New York, New York"/>
-                <StringItem index="4" value="Charlotte, North Carolina"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(getLocations())" type="code"/>
             </Property>
           </Properties>
         </Component>
@@ -235,14 +229,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox2">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Dallas, Texas"/>
-                <StringItem index="1" value="Palo Alto, California"/>
-                <StringItem index="2" value="Denver, Colorado"/>
-                <StringItem index="3" value="New York, New York"/>
-                <StringItem index="4" value="Charlotte, North Carolina"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(getLocations())" type="code"/>
             </Property>
           </Properties>
         </Component>
@@ -363,14 +351,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox3">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Dallas, Texas"/>
-                <StringItem index="1" value="Palo Alto, California"/>
-                <StringItem index="2" value="Denver, Colorado"/>
-                <StringItem index="3" value="New York, New York"/>
-                <StringItem index="4" value="Charlotte, North Carolina"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(getLocations())" type="code"/>
             </Property>
           </Properties>
         </Component>
@@ -461,14 +443,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox4">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Dallas, Texas"/>
-                <StringItem index="1" value="Palo Alto, California"/>
-                <StringItem index="2" value="Denver, Colorado"/>
-                <StringItem index="3" value="New York, New York"/>
-                <StringItem index="4" value="Charlotte, North Carolina"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(getLocations())" type="code"/>
             </Property>
           </Properties>
         </Component>

@@ -13,9 +13,9 @@ import java.awt.BorderLayout;
  *
  * @author Matthew
  */
-public class RefactorThisShit extends JFrame{
+public class CreatedTabbedPane extends JFrame{
     
-    public RefactorThisShit(){
+    public CreatedTabbedPane(){
         //initComponents();
         createAndShowGUI();
     }
@@ -100,7 +100,7 @@ public class RefactorThisShit extends JFrame{
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RefactorThisShit().setVisible(false);
+                new CreatedTabbedPane().setVisible(false);
             }
         });
     }
