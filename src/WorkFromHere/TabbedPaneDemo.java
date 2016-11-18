@@ -8,16 +8,12 @@ import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import JAMDasCutD.BasicCreatePanel;
 import JAMDasCutD.BasicRetrievePanel;
-//import JAMDasCutD.BasicUpdatePanel;
 import JAMDasCutD.BasicDeletePanel;
-import JAMDasCutD.BasicUpdateAlternative;
 import JAMDasCutD.BasicUpdatePanel;
-import JFrameCards.Delete3;
 
 public class TabbedPaneDemo extends JPanel {
     public TabbedPaneDemo() {
@@ -40,10 +36,6 @@ public class TabbedPaneDemo extends JPanel {
         JPanel panelDelete = new BasicDeletePanel();
         tabbedPane.addTab("Delete", panelDelete);
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
-        
-        JPanel panelNewRetrieve = new Delete3();
-        tabbedPane.addTab("New Retrieve", panelNewRetrieve);
-        tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
         
         //Add the tabbed pane to this panel.
         add(tabbedPane);
