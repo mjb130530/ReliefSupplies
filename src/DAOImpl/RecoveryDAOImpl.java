@@ -71,7 +71,7 @@ public class RecoveryDAOImpl implements RecoveryDAO {
     public String getHash(String password){
         StringBuilder sb = new StringBuilder();
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance("MD5");
             digest.update(password.getBytes());
             byte[] newPass = digest.digest();
             for(byte bytes : newPass){
