@@ -24,7 +24,8 @@ import javax.sql.DataSource;
  * @author Matthew
  */
 public class LoggingIntoSystem extends javax.swing.JFrame {
-
+        MemberLoginDAO memberLoginDAO;
+        Member member;
     /**
      * Creates new form LoggingIntoSystem
      */
@@ -197,7 +198,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
             //gotoTabbedPane();
             this.dispose();
             //I modified TabbedPaneDemo.java this works but probably not best practice
-            RefactorThisShit refactorThis = new RefactorThisShit();
+            RefactorThisShit refactorThis = new RefactorThisShit(member);
             refactorThis.setVisible(false);
         }
         else{
@@ -220,7 +221,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
 
     public void gotoTabbedPane(){
         this.dispose();
-        TabbedPaneDemo tabbedPaneDemo = new TabbedPaneDemo();
+        TabbedPaneDemo tabbedPaneDemo = new TabbedPaneDemo(member);
         tabbedPaneDemo.setVisible(true);
     }
     

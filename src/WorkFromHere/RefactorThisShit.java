@@ -5,6 +5,7 @@
  */
 package WorkFromHere;
 
+import Entity.Member;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 
@@ -14,10 +15,11 @@ import java.awt.BorderLayout;
  * @author Matthew
  */
 public class RefactorThisShit extends JFrame{
-    
-    public RefactorThisShit(){
+    static Member member;
+    public RefactorThisShit(Member member){
         //initComponents();
-        createAndShowGUI();
+        this.member = member;
+        createAndShowGUI(member);
     }
     
 //    private void initComponents() {
@@ -82,7 +84,7 @@ public class RefactorThisShit extends JFrame{
      * this method should be invoked from
      * the event dispatch thread.
      */
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI(Member member) {
         //Create and set up the window.
         JFrame frame = new JFrame("JAMDasCutD Disaster Relief");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -90,17 +92,18 @@ public class RefactorThisShit extends JFrame{
                 
         //Add content to the window.
         //TabbedPaneDemo tabbedPaneDemo = new TabbedPaneDemo();
-        frame.add(new TabbedPaneDemo(), BorderLayout.CENTER);
+        frame.add(new TabbedPaneDemo(member), BorderLayout.CENTER);
         
         //Display the window.
         frame.pack();
         frame.setVisible(true);
     }
     
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RefactorThisShit().setVisible(false);
+                new RefactorThisShit(member).setVisible(false);
             }
         });
     }
