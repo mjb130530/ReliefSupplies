@@ -277,22 +277,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean deleteEmployee(Connection connection, String employeeName) throws SQLException {
+    public boolean deleteEmployee(Connection connection, String firstName, String lastName) throws SQLException {
         PreparedStatement ps = null;
-        String firstName = null;
-        String lastName = null;
-        String fullName = employeeName;
-        String delims = "[ ]+";
-        String[] tokens = fullName.split(delims);
-        firstName = tokens[1];
-        //Should place an if statement here to catch if only one name was sent through
-        lastName = tokens[2];
         try {
             String deleteEmployee = "DELETE FROM Employees WHERE Employees.employeeFirst = ? AND Employees.employeeLast = ?;";
             ps = connection.prepareStatement(deleteEmployee);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
-            ps.executeQuery();
+            ps.executeUpdate();
             return true;
         } catch (Exception ex) {
             System.err.println("Class: EmployeeDAOImpl. Method: deleteEmployee");

@@ -30,7 +30,7 @@ public interface EmployeeDAO {
     ArrayList<Employee> retrieveEmployee(Connection connection, Long locationID) throws SQLException;
     ArrayList<Employee> retrieveEmployee(Connection connection, Long locationID, Long employeeID) throws SQLException;
     
-    boolean deleteEmployee(Connection connection, String employeeName) throws SQLException;
+    boolean deleteEmployee(Connection connection, String firstName, String lastName) throws SQLException;
     
     
 }

@@ -8,9 +8,11 @@
 package JAMDasCutD;
 
 import DAOImpl.DonorDAOImpl;
+import DAOImpl.EmployeeDAOImpl;
 import DAOImpl.LocationDAOImpl;
 import DBConnection.DBConnection;
 import Entity.Donor;
+import Entity.Employee;
 import Entity.Location;
 import java.io.IOException;
 import java.sql.Connection;
@@ -143,6 +145,11 @@ public class BasicDeletePanel extends javax.swing.JPanel {
 
         jButton2.setText("Delete");
         jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("First Name");
 
@@ -393,7 +400,22 @@ public class BasicDeletePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        LocationDAOImpl locationDAO = new LocationDAOImpl();
+        String locationString = jComboBox1.getSelectedItem().toString();
+
+        // Extract the city - index 0
+        StringBuilder sb = new StringBuilder();
+        sb.append(locationString);
+        String[] cityAndState = sb.toString().split(", ");
+        boolean worked = false;
+        try {
+            worked = locationDAO.deleteLocation(getConnection(), cityAndState[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (worked) {
+            System.out.println(cityAndState[0] + ", " + cityAndState[1] + " was deleted.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //Delete a donor
@@ -421,6 +443,82 @@ public class BasicDeletePanel extends javax.swing.JPanel {
         donorDeleted = false;
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+        String firstName = jTextField1.getText();
+        String lastName = jTextField2.getText();
+        String employeeSSN = jTextField3.getText();
+        String employeeID = jTextField4.getText();
+        boolean employeeDeleted = false;
+        boolean employeeExists = false;
+        try {
+            employeeExists = checkIfExists(firstName, lastName, employeeSSN, "Employee");
+            if (employeeExists) {
+                employeeDeleted = employeeDAO.deleteEmployee(getConnection(), firstName, lastName);
+                boolean reallyDeleted = checkIfDeleted(firstName, lastName, employeeSSN, "Employee");
+                if (employeeDeleted && reallyDeleted) {
+                    System.out.println("Employee " + firstName + " " + lastName + " was deleted.");
+                } else {
+                    System.out.println("Employee " + firstName + " " + lastName + " was unable to be deleted");
+                }
+            } else {
+                System.out.println("Employee " + firstName + " " + lastName + " does not exist.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BasicDeletePanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BasicDeletePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    // Check if the donor actually exists before trying to delete them
+    private boolean checkIfExists(String firstName, String lastName, String SSN, String type) throws SQLException, IOException {
+        if (type.equals("Employee")) {
+            EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+            ArrayList<Employee> employeeList;
+            employeeList = employeeDAO.retrieveEmployee(getConnection(), firstName, lastName, SSN);
+            if (employeeList == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (type.equals("Donor")) {
+            DonorDAOImpl donorDAO = new DonorDAOImpl();
+            ArrayList<Donor> donorList;
+            donorList = donorDAO.retrieveDonor(getConnection(), firstName, lastName);
+            if (donorList == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // If the donor was really deleted, then the arraylist of a retrieve should return false.
+    private boolean checkIfDeleted(String firstName, String lastName, String SSN, String type) throws SQLException, IOException {
+        if (type.equals("Employee")) {
+            EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+            ArrayList<Employee> employeeList;
+            employeeList = employeeDAO.retrieveEmployee(getConnection(), firstName, lastName, SSN);
+            if (employeeList == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } else if (type.equals("Donor")) {
+            DonorDAOImpl donorDAO = new DonorDAOImpl();
+            ArrayList<Donor> donorList;
+            donorList = donorDAO.retrieveDonor(getConnection(), firstName, lastName);
+            if (donorList == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private void groupButton( ) {
         ButtonGroup bg1 = new ButtonGroup( );
         bg1.add(jRadioButton1);

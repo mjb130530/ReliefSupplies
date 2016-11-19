@@ -470,8 +470,11 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
             String locationState = jComboBox3.getSelectedItem().toString();
             try {
                 location = locationDAO.retrieveLocation(getConnection(), city, locationState);
-                //*******Problem*******
                 printLocation(location);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    getRSOneLocationMetrix(location),
+                    getTableTitles("Location")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -482,17 +485,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 long selectedLocation = provideLocationID(locationString);
                 
                 location = locationDAO.retrieveLocation(getConnection(), selectedLocation);
-                //*******Problem*******
                 printLocation(location);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null}
-                    },
+                    getRSOneLocationMetrix(location),
                     getTableTitles("Location")
                 ));
             }
@@ -516,17 +511,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         if(locationString.equals("Any") && employeeID.equals("")){
             try {
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), firstName, lastName, ssn);
-                //*******Problem*******
                 printEmployees(employeeList);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null}
-                    },
+                    getRSEmployeeMetrix(employeeList),
                     getTableTitles("Employee")
                 ));
             }
@@ -541,17 +528,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 long employeeLocation = provideLocationID(locationString);
                 Long employeeIDLong = Long.valueOf(employeeID);
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation, employeeIDLong);
-                //*******Problem*******
                 printEmployees(employeeList);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null}
-                    },
+                    getRSEmployeeMetrix(employeeList),
                     getTableTitles("Employee")
                 ));
             }
@@ -565,17 +544,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
             try {
                 long employeeLocation = provideLocationID(locationString);
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation);
-                //*******Problem*******
                 printEmployees(employeeList);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null}
-                    },
+                    getRSEmployeeMetrix(employeeList),
                     getTableTitles("Employee")
                 ));
             }
@@ -590,17 +561,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
                 long employeeLocation = provideLocationID(locationString);
                 Long employeeIDLong = Long.valueOf(employeeID);
                 employeeList = employeeDAO.retrieveEmployee(getConnection(), employeeLocation, employeeIDLong);
-                //*******Problem*******
                 printEmployees(employeeList);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null}
-                    },
+                    getRSEmployeeMetrix(employeeList),
                     getTableTitles("Employee")
                 ));
             }
@@ -621,12 +584,14 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         String firstName = jTextField5.getText();
         String lastName = jTextField6.getText();
         
-            
         if(locationString.equals("Any")){
             try {
                 donorList = donorDAO.retrieveDonor(getConnection(), firstName, lastName);
-                //*******Problem*******
                 printDonors(donorList);
+                jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    getRSDonorMetrix(donorList),
+                    getTableTitles("Donor")
+                ));
             }
             catch (SQLException | IOException ex) {
                 Logger.getLogger(StupidBasic.class.getName()).log(Level.SEVERE, null, ex);
@@ -635,19 +600,10 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         else if (!locationString.equals("Any")){
             try {
                 long donorsLocation = provideLocationID(locationString);
-                System.out.println("LocationID: " + donorsLocation);
                 donorList = donorDAO.retrieveDonor(getConnection(), donorsLocation, firstName, lastName);
-                //*******Problem*******
                 printDonors(donorList);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, null, null}
-                    },
+                    getRSDonorMetrix(donorList),
                     getTableTitles("Donor")
                 ));
             }
@@ -668,12 +624,9 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         if(!locationString.equals("Any")){
             try{
                 supplyList = supplyDAO.retrieveSupplies(getConnection(), suppliesLocation);
-                //supplyList.toArray();
-                //*******Problem*******
                 printSupplies(supplyList);
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    new Object [][] {
-                    supplyList.toArray()},
+                    getRSSupplyMetrix(supplyList),
                     getTableTitles("Supply")
                 ));
             }
@@ -754,21 +707,101 @@ public class BasicRetrievePanel extends javax.swing.JPanel {
         return tableTitles;
     }
     
-//    private String[][] getRSMatrix(Object objectArray){
-//        //String[][] matrixToPrint new String[objectArray.size()];//[];
-//        Object[][] matrixToPrint = new Object[rows][columns];
-//        int row = 0;
-//        if(objectArray != null){
-//            for(int i = 0; i < objectArray.; i++){
-//                
-//            }
-//            
-//        }
-//        else{
-//            System.out.println("There were no matches found");
-//            return null;
-//        }
-//    }
+    private Object[][] getRSLocationMetrix(ArrayList<Location> locationList){
+        int columns = 11;
+        int rows = locationList.size();
+        Object[][] matrixToPrint = new Object[rows][columns];
+        
+        for(int row = 0; row < rows; row++){
+            Location locationToPrint = locationList.get(row);
+                matrixToPrint[row][0] = locationToPrint.getLocationID();
+                matrixToPrint[row][1] = locationToPrint.getLocationState();
+                matrixToPrint[row][2] = locationToPrint.getCounty();
+                matrixToPrint[row][3] = locationToPrint.getCity();
+                matrixToPrint[row][4] = locationToPrint.getStreet();
+                matrixToPrint[row][5] = locationToPrint.getZipcode();
+                matrixToPrint[row][6] = locationToPrint.getCityTaxes();
+                matrixToPrint[row][7] = locationToPrint.getStateTaxes();
+                matrixToPrint[row][8] = locationToPrint.getRent();
+                matrixToPrint[row][9] = locationToPrint.getElectricity();
+                matrixToPrint[row][10] = locationToPrint.getWater();
+        }   
+        return matrixToPrint;
+    }
+    
+    private Object[][] getRSOneLocationMetrix(Location location){
+        int columns = 11;
+        int rows = 1;
+        Object[][] matrixToPrint = new Object[rows][columns];
+        
+        for(int row = 0; row < rows; row++){
+            matrixToPrint[row][0] = location.getLocationID();
+            matrixToPrint[row][1] = location.getLocationState();
+            matrixToPrint[row][2] = location.getCounty();
+            matrixToPrint[row][3] = location.getCity();
+            matrixToPrint[row][4] = location.getStreet();
+            matrixToPrint[row][5] = location.getZipcode();
+            matrixToPrint[row][6] = location.getCityTaxes();
+            matrixToPrint[row][7] = location.getStateTaxes();
+            matrixToPrint[row][8] = location.getRent();
+            matrixToPrint[row][9] = location.getElectricity();
+            matrixToPrint[row][10] = location.getWater();
+        }   
+        return matrixToPrint;
+    }
+    
+    private Object[][] getRSEmployeeMetrix(ArrayList<Employee> employeeList){
+        int columns = 11;
+        int rows = employeeList.size();
+        Object[][] matrixToPrint = new Object[rows][columns];
+        
+        for(int row = 0; row < rows; row++){
+            Employee employeesToPrint = employeeList.get(row);
+            matrixToPrint[row][0] = employeesToPrint.getEmployeeID();
+            matrixToPrint[row][1] = employeesToPrint.getLocationID();
+            matrixToPrint[row][2] = employeesToPrint.getEmployeeFirst();
+            matrixToPrint[row][3] = employeesToPrint.getEmployeeLast();
+            matrixToPrint[row][4] = employeesToPrint.getEmployeeSSN();
+            matrixToPrint[row][5] = employeesToPrint.getEmployeeType();
+            matrixToPrint[row][6] = employeesToPrint.getDateOfHire();
+        }   
+        return matrixToPrint;
+    }
+    
+    private Object[][] getRSDonorMetrix(ArrayList<Donor> donorList){
+        int columns = 11;
+        int rows = donorList.size();
+        Object[][] matrixToPrint = new Object[rows][columns];
+        
+        for(int row = 0; row < rows; row++){
+            Donor donorsToPrint = donorList.get(row);
+            matrixToPrint[row][0] = donorsToPrint.getDonorID();
+            matrixToPrint[row][1] = donorsToPrint.getLocationID();
+            matrixToPrint[row][2] = donorsToPrint.getDonorFirst();
+            matrixToPrint[row][3] = donorsToPrint.getDonorLast();
+            matrixToPrint[row][4] = donorsToPrint.getDonationDate();
+            matrixToPrint[row][5] = donorsToPrint.getDonationType();
+            matrixToPrint[row][6] = donorsToPrint.getDonationValue();
+            matrixToPrint[row][7] = donorsToPrint.getDonationDescription();
+        }   
+        return matrixToPrint;
+    }
+    
+    private Object[][] getRSSupplyMetrix(ArrayList<Supplies> supplyList){
+        int columns = 5;
+        int rows = supplyList.size();
+        Object[][] matrixToPrint = new Object[rows][columns];
+        
+        for(int row = 0; row < rows; row++){
+            Supplies suppliesToPrint = supplyList.get(row);
+            matrixToPrint[row][0] = suppliesToPrint.getLocationID();
+            matrixToPrint[row][1] = suppliesToPrint.getSupplyName();
+            matrixToPrint[row][2] = suppliesToPrint.getSupplyType();
+            matrixToPrint[row][3] = suppliesToPrint.getSupplyQuantity();
+            matrixToPrint[row][4] = suppliesToPrint.getSupplyDescription();
+        }   
+        return matrixToPrint;
+    }
     
     private void printLocation(Location location){
         if(location != null){
