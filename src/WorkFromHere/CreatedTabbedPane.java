@@ -7,6 +7,7 @@
  */
 package WorkFromHere;
 
+import Entity.Member;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 
@@ -17,9 +18,11 @@ import java.awt.BorderLayout;
  */
 public class CreatedTabbedPane extends JFrame{
     
-    public CreatedTabbedPane(){
+    static Member member;
+    public CreatedTabbedPane(Member member){
         //initComponents();
-        createAndShowGUI();
+        this.member = member;
+        createAndShowGUI(member);
     }
     
 //    private void initComponents() {
@@ -84,7 +87,7 @@ public class CreatedTabbedPane extends JFrame{
      * this method should be invoked from
      * the event dispatch thread.
      */
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI(Member member) {
         //Create and set up the window.
         JFrame frame = new JFrame("JAMDasCutD Disaster Relief");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -92,7 +95,7 @@ public class CreatedTabbedPane extends JFrame{
                 
         //Add content to the window.
         //TabbedPaneDemo tabbedPaneDemo = new TabbedPaneDemo();
-        frame.add(new TabbedPaneDemo(), BorderLayout.CENTER);
+        frame.add(new TabbedPaneDemo(member), BorderLayout.CENTER);
         
         //Display the window.
         frame.pack();
@@ -102,7 +105,7 @@ public class CreatedTabbedPane extends JFrame{
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreatedTabbedPane().setVisible(false);
+                new CreatedTabbedPane(member).setVisible(false);
             }
         });
     }

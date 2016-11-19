@@ -26,7 +26,8 @@ import javax.sql.DataSource;
  * @author Matthew
  */
 public class LoggingIntoSystem extends javax.swing.JFrame {
-
+        MemberLoginDAO memberLoginDAO;
+        Member member;
     /**
      * Creates new form LoggingIntoSystem
      */
@@ -159,7 +160,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
         
         StringBuilder sb = new StringBuilder();
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance("MD5");
             digest.update(password.getBytes());
             byte[] newPass = digest.digest();
             for(byte bytes : newPass){
@@ -186,7 +187,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
         
         if(member != null && !errorString.equals("error")){
             this.dispose();
-            CreatedTabbedPane refactorThis = new CreatedTabbedPane();
+            CreatedTabbedPane refactorThis = new CreatedTabbedPane(member);
             refactorThis.setVisible(false);
         }
         else{
@@ -212,7 +213,7 @@ public class LoggingIntoSystem extends javax.swing.JFrame {
 
     public void gotoTabbedPane(){
         this.dispose();
-        TabbedPaneDemo tabbedPaneDemo = new TabbedPaneDemo();
+        TabbedPaneDemo tabbedPaneDemo = new TabbedPaneDemo(member);
         tabbedPaneDemo.setVisible(true);
     }
     

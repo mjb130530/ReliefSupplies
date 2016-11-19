@@ -20,7 +20,9 @@ import Entity.Donor;
 import Entity.Employee;
 import Entity.Location;
 import Entity.Supplies;
+import WorkFromHere.LoggingIntoSystem;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,7 +44,25 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         initComponents();
         groupButton();
     }
-
+    
+    public String getHash(String employeeSSN) {
+        System.out.println("HERE");
+        StringBuilder sb = new StringBuilder();
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(employeeSSN.getBytes());
+            byte[] newPass = digest.digest();
+            for (byte bytes : newPass) {
+                sb.append(String.format("%02x", bytes & 0xff));
+            }
+            employeeSSN = sb.toString();
+        } catch (Exception ex) {
+            System.err.println("Class: LoggingIntoSystem Method: jButton1ActionPerformed");
+            Logger.getLogger(LoggingIntoSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(employeeSSN);
+        return employeeSSN;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -729,7 +749,7 @@ public class BasicCreatePanel extends javax.swing.JPanel {
         employee.setLocationID(getLocationID(jComboBox1.getSelectedItem().toString()));
         employee.setEmployeeFirst(jTextField12.getText());
         employee.setEmployeeLast(jTextField13.getText());
-        employee.setEmployeeSSN(jTextField14.getText());
+        employee.setEmployeeSSN(getHash(jTextField14.getText()));
         employee.setEmployeeType(jComboBox2.getSelectedItem().toString());
         employee.setDateOfHire(jTextField15.getText());
         try{

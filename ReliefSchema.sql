@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS DisasterRelief.Employees(
 	locationID BIGINT NOT NULL,
 	employeeFirst VARCHAR(30),
 	employeeLast VARCHAR(30),
-	employeeSSN VARCHAR(15),
+	employeeSSN VARCHAR(64),
 	employeeType VARCHAR(30),
 	dateOfHire VARCHAR(30),
 	PRIMARY KEY(employeeID),
