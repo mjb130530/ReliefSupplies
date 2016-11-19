@@ -1,10 +1,3 @@
-/*
- * CS4389
- * Data and Application Security
- * Final Project
- * Project Group 4
- * Group Members: Matt Butler, Johnny Edgett, Abdul Wahab
- */
 package WorkFromHere;
 
 import javax.swing.JTabbedPane;
@@ -17,32 +10,32 @@ import javax.swing.UIManager;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
-import JAMDasCutD.BasicCreatePanel;
+//import JAMDasCutD.BasicCreatePanel;
 import JAMDasCutD.BasicRetrievePanel;
-import JAMDasCutD.BasicDeletePanel;
-import JAMDasCutD.BasicUpdatePanel;
+//import JAMDasCutD.BasicDeletePanel;
+//import JAMDasCutD.BasicUpdatePanel;
 
-public class TabbedPaneDemo extends JPanel {
-    public TabbedPaneDemo() {
+public class RetrieveOnlyTab extends JPanel {
+    public RetrieveOnlyTab() {
         super(new GridLayout(1, 1));
         
         JTabbedPane tabbedPane = new JTabbedPane();
         
-        JPanel panelCreate = new BasicCreatePanel();
-        tabbedPane.addTab("Create", panelCreate);
-        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+//        JPanel panelCreate = new BasicCreatePanel();
+//        tabbedPane.addTab("Create", panelCreate);
+//        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
         
         JPanel panelRetrieve = new BasicRetrievePanel();
         tabbedPane.addTab("Retrieve", panelRetrieve);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
         
-        JPanel panelUpdate = new BasicUpdatePanel();
-        tabbedPane.addTab("Update", panelUpdate);
-        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-        
-        JPanel panelDelete = new BasicDeletePanel();
-        tabbedPane.addTab("Delete", panelDelete);
-        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+//        JPanel panelUpdate = new BasicUpdatePanel();
+//        tabbedPane.addTab("Update", panelUpdate);
+//        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
+//        
+//        JPanel panelDelete = new BasicDeletePanel();
+//        tabbedPane.addTab("Delete", panelDelete);
+//        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
         
         //Add the tabbed pane to this panel.
         add(tabbedPane);

@@ -1,10 +1,3 @@
-/*
- * CS4389
- * Data and Application Security
- * Final Project
- * Project Group 4
- * Group Members: Matt Butler, Johnny Edgett, Abdul Wahab
- */
 package WorkFromHere;
 
 import javax.swing.JTabbedPane;
@@ -19,11 +12,11 @@ import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import JAMDasCutD.BasicCreatePanel;
 import JAMDasCutD.BasicRetrievePanel;
-import JAMDasCutD.BasicDeletePanel;
+//import JAMDasCutD.BasicDeletePanel;
 import JAMDasCutD.BasicUpdatePanel;
 
-public class TabbedPaneDemo extends JPanel {
-    public TabbedPaneDemo() {
+public class LimitedTabbedPane extends JPanel {
+    public LimitedTabbedPane() {
         super(new GridLayout(1, 1));
         
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -40,9 +33,9 @@ public class TabbedPaneDemo extends JPanel {
         tabbedPane.addTab("Update", panelUpdate);
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
         
-        JPanel panelDelete = new BasicDeletePanel();
-        tabbedPane.addTab("Delete", panelDelete);
-        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+//        JPanel panelDelete = new BasicDeletePanel();
+//        tabbedPane.addTab("Delete", panelDelete);
+//        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
         
         //Add the tabbed pane to this panel.
         add(tabbedPane);
@@ -91,3 +84,4 @@ public class TabbedPaneDemo extends JPanel {
         });
     }
 }
+
